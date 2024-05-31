@@ -1,0 +1,141 @@
+<div class="emp-form">
+    <form onsubmit="return false">
+        <h5 class="header">Add Employee</h5>
+        <div class="emp-container">
+            <div class="profile">
+                <div class="profile-info">
+                    <img src="../../assets/profile.png" alt="profile" class="profile-pic">
+                    <button class="edit-button" onclick="document.getElementById('profileImg').click()">Edit</button>
+                    <input type='file' id="profileImg" accept=".jpg,.png,.bmp"  onchange="checkImage()">
+                </div>
+                <div class="text-danger-img">
+                    <button class="text-danger-imgbtn" onclick="document.getElementById('profileImg').click()">Upload Profile Picture</button>
+                </div>
+            </div>
+            <div class="emp-info">
+                <div class="sub-sec-header">
+                    <h5>Personal Information</h5>
+                </div>
+                <div class="sub-sec">
+                    <div class="inner-sub-sec">
+                        <label for="employee-no">Emp No</label>
+                        <input type="text" name="employee-no" id="employee-no"  class="form-input input-required" placeholder="Text(TZ002030)" onkeyup="checkEmployeeNo(0)">
+                        <div class="text-danger-empno">
+                            <img src="../../assets/invalid.png" class="inavalid">
+                            <p class="danger-msg">This field is required</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="sub-sec">
+                    <div class="inner-sub-sec">
+                        <label for="first-name">First Name</label>
+                        <input type="text" name="first-name" id="first-name" class="form-input input-required" placeholder="Text" onkeyup="checkFirstName(0)">
+                        <div class="text-danger-fname">
+                            <img src="../../assets/invalid.png" class="inavalid">
+                            <p class="danger-msg">This field is required</p>
+                        </div>
+                    </div>
+                    <div class="inner-sub-sec">
+                        <label for="last-name">Last Name</label>
+                        <input type="text" name="last-name" id="last-name" class="form-input input-required" placeholder="Text" onkeyup="checkLastName(0)" >
+                        <div class="text-danger-lname">
+                            <img src="../../assets/invalid.png" class="inavalid">
+                            <p class="danger-msg">This field is required</p>
+                        </div>
+                    </div>
+                    <div class="inner-sub-sec">
+                        <label for="dob">Date of Birth</label>
+                        <input type="text" onfocus="(this.type='date')" name="dob" id="dob" class="form-input" placeholder="Select">    
+                    </div>
+                </div>
+                <div class="sub-sec1">
+                    <div class="inner-sub-sec1">
+                        <label for="email">Email Id</label>
+                        <input type="email" name="email" id="email" class="form-input input-required" placeholder="Joe.i@technovert.com" onkeyup="checkEmail(0)">
+                        <div class="text-danger-email">
+                            <img src="../../assets/invalid.png" class="inavalid">
+                            <p class="danger-msg">This field is required</p>
+                        </div>
+                    </div>
+                    <div class="inner-sub-sec">
+                        <label for="mob-no">Mobile Number</label>
+                        <input type="tel" name="mob-no" id="mob-no" class="form-input" maxlength="10" placeholder="0000000000" onkeyup="checkMobileNo()">
+                        <div class="text-danger-mobno">
+                            <img src="../../assets/invalid.png" class="inavalid">
+                            <p class="danger-msg">This field is required</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="sub-sec-header1">
+                    <h5>Employment Information</h5>
+                </div>
+                <div class="sub-sec">
+                    <div class="inner-sub-sec1">
+                        <label for="joining-date">Joining Date</label>
+                        <input type="text" onclick="(this.type='date')" name="joining-date" id="joining-date" class="form-input-large input-required" placeholder="12/08/2023" >
+                        <div class="text-danger-jndate">
+                            <img src="../../assets/invalid.png" class="inavalid1">
+                            <p class="danger-msg">This field is required</p>
+                        </div>
+                    </div>
+                    <div class="inner-sub-sec">
+                        <label for="loacation">Location</label>
+                        <select name="location" id="location" class="selection">
+                            <option value="Hyderabad">Hyderabad</option>
+                            <option value="Bangalore">Bangalore</option>
+                            <option value="Chennai">Chennai</option>
+                            <option value="Guntur">Guntur</option>
+                            <option value="Vijayawada">Vijayawada</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="sub-sec2">
+                    <div class="inner-sub-sec">
+                        <label for="job-title">Job Title</label>
+                        <select name="job-title" id="job-title" class="selection">
+                            <option value="Architect">Architect</option>
+                            <option value="Full-stack Developer">Full-stack Developer</option>
+                            <option value="Sales specialist">Sales specialist</option>
+                            <option value="Project Manager">Project Manager</option>
+                        </select>
+                    </div>
+                    <div class="inner-sub-sec">
+                        <label for="department">Department</label>
+                        <select name="department" id="department" class="selection">
+                            <option value="Sales">	Sales</option>
+                            <option value="Prod Engg">Prod Engg</option>
+                            <option value="HR">HR</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="sub-sec3">
+                    <div class="inner-sub-sec">
+                        <label for="assign-manager">Assign Manager</label>
+                        <select name="assign-manager" id="assign-manager" class="selection1">
+                            <option value="" selected disabled hidden>Search</option>
+                            <option value="Santhosh">Santhosh</option>
+                            <option value="Mahfooz">Mahfooz</option>
+                            <option value="Hafeez">Hafeez</option>
+                        </select>
+                    </div>
+                    <div class="inner-sub-sec">
+                        <label for="assign-project">Assign Project</label>
+                        <select name="assign-project" id="assign-project" class="selection1">
+                            <option value="" selected disabled hidden>Search</option>
+                            <option value="Prod Engg">Prod Engg</option>
+                            <option value="UX">UX</option>
+                            <option value="HR">HR</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="sub-sec">
+                    <div class="form-buttons">
+                        <button class="cancel" onclick="cancel()" >Cancel</button>
+                        <button id="myButton" class="add-Employee-button">Add Employee</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div id="snackbar">Data Submitted successfully..</div>

@@ -1,0 +1,105 @@
+// .right-header{
+//     // width: 83%;
+//     display: flex;
+//     flex-direction: row;
+//     justify-content: space-between;
+//     width: 100%;
+//     margin-top:1%;
+//     padding-left: 2%;
+//     padding-right: 1%;
+//     height: auto;
+// }
+.right-header{
+    display: flex;
+    width: 100%;
+    background-image: url(../../assets/bxSearch.png);
+    background-repeat: no-repeat;
+    background-position-y: 60%;
+    background-position-x: 2.5%;
+    background-size: 17px;
+    box-shadow: 1px 2px 5px rgb(219, 217, 217),-1px -1px 1px rgb(219, 217, 217);
+    border-radius: 8px;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: 1%;
+    margin-top: 1%;
+    height: 3.5vw;
+}
+@media only screen and (max-width: 991px) {
+    .right-header{
+        display: flex;
+        width: 100%;
+        background-image: url(../../assets/bxSearch.png);
+        background-repeat: no-repeat;
+        background-position-y: 19px;
+        background-position-x: 2.5%;
+        background-size: 17px;
+        box-shadow: 1px 2px 5px rgb(219, 217, 217),-1px -1px 1px rgb(219, 217, 217);
+        border-radius: 8px;
+        align-items: center;
+        justify-content: space-between;
+        padding-right: 1%;
+        height: 5.3%;
+    }
+}
+// @media only screen and (max-width: 1100px) 
+// {
+//     .right-header{
+//         margin-top: -0.1%;
+//         width: 100%;
+//         padding-right: 3%;
+//     }
+// }
+.input-search{
+    border-style: none;
+    color: #131414;;
+    font-size: 1vw;
+    border: none;
+    background-color: #ffffff;
+    margin-left: 30%;
+}
+.input-search:focus{
+    outline: none;
+}
+.logo-img{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.admin-details{
+    display: flex;
+    flex-direction: column;
+    margin-left: 4%;
+    margin-top: 4%;
+    height: auto;
+}
+.admin-role{
+    font-weight: bold;
+    margin-top: -20%;
+}
+.admin-name pre{
+}
+.down-arrow img{
+    width: 130%;
+    margin-top: 170%;
+    margin-left: 15%;
+}
+.person-icon{
+    height: 35px;
+    margin-top: 18%;
+    border-radius: 50%;
+    margin-left: 20%;
+}
+.user-img{
+    position: relative;
+}
+.active-symbol{
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: rgb(62, 195, 62);
+    top:70%;
+    left:95%;
+}

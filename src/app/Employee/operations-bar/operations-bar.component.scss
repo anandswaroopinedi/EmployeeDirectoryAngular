@@ -1,0 +1,245 @@
+.operations-bar{
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.operations-header{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1%;
+    height: 60px;
+    align-items: center;
+}
+.header-heading{
+    margin-top: 2%;
+    color: #3B5064;
+}
+
+.header-heading-desc{
+    color: #83909a;
+    font-size: 13px;
+}
+.accessing-buttons{
+    justify-content: space-between;
+    font-size: 12px;
+    align-items: center;
+}
+
+.export-button{
+    background-color: rgb(255, 255, 255);
+    background-image: url(../../../assets/maskedIcon.png);
+    border: 1px solid rgb(151, 149, 149);
+    background-repeat: no-repeat;
+    background-size: 15px;
+    background-position-x: 14px;
+    background-position-y: 6px;
+    padding: 5px 25px 5px 35px;
+    border-radius: 8px;
+    color: #818282;
+    cursor: pointer;
+}
+span {
+    content: "\271A";
+    color:white;
+    position: relative;
+    left: 18%;
+    cursor: pointer;
+  }
+.add-button{
+    background-color: #F44848;
+    border-style: none;
+    padding: 10px 25px 10px 55px;
+    margin:0px 10px;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+}
+.button-group{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    height: 30px;
+    margin-top:1%;
+}
+.vector-area{
+    padding-top: 0.7%;
+}
+.filter{
+    display: flex;
+    width: 100%;
+    background-color: #FDF2F2;
+    color: #F66868;
+    padding: 0.5%;
+    border: 1px solid #FBC0C0;
+    border-radius: 6px;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 1%;
+    height:50px;
+    margin-top:1%;
+    font-size:12px;
+}
+.count{
+    margin-left: 2%;
+    border: 1px solid #FBC0C0;
+    padding: 0.1% 0.5% 0.1% 0.5%;
+    background-color: white;
+    color: #7A859B;
+}
+.filter-name{
+    font-size: 1vw;
+    color: rgb(254, 99, 99);
+    font-family: poppins;
+}
+.filter-status-div{
+    margin-left: 3%;
+}
+
+.filter-status{
+    padding: 12%;
+    border: 1px solid #FBC0C0;
+    border-radius: 6px;
+    color: #7A859B;
+    display: inline-block;
+    position: relative;
+}
+.dropbtn {
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+    background-image: url("../../../assets/downArrow.jpg");
+    background-repeat: no-repeat;
+    background-size: 12px;
+    background-position-x: 95%;
+    background-position-y: 50%;
+    color: #7A859B;
+    padding: 4px 20px 4px 10px;
+    font-size: 14px;
+    width: 100%;
+    border: none;
+    border-radius: 20%;
+    cursor: pointer;
+  }
+  
+  
+  .dropdown {
+    position: relative;
+    display: inline-block;
+    border: 1px solid #FBC0C0;
+    border-radius: 10px;
+  }
+  
+  .dropdown-content {
+    position: absolute;
+    background-color: white;
+    color: #7A859B;
+    border: 1px solid #FBC0C0;
+    min-width: 125%;
+    overflow: auto;
+    margin-top: 1%;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 100;
+    padding: 5%;
+  }
+  
+  .dropdown-content a {
+    color: black;
+    padding: 7px;
+    /* padding: 12px 10px; */
+    text-decoration: none;
+  }
+  
+  
+  .show 
+  {display: block;}
+
+  .dropdown-entry{
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+}
+.dropdown-entry label{
+    margin-left: 4%;
+}
+#status-check{
+    cursor: pointer;
+    width: 15px;
+}
+
+.filter-location-div{
+    margin-left: 3%;
+}
+
+.filter-department-div{
+    margin-left: 3%;
+}
+
+
+.filter-div{
+    display: flex;
+    flex-direction: row;
+    height: 80px;
+}
+
+.department-names{
+    font-size: 12px;
+    margin-left: 5px;
+    font-family: inherit;
+}
+.filter-reset-apply{
+    display: flex;
+    flex-direction: row;
+    margin-left:42%;
+}
+@media only screen and (max-width: 1430px) {
+    .filter-reset-apply{
+        display: flex;
+        flex-direction: row;
+    }
+}
+@media only screen and (max-width: 1200px) {
+    .filter-reset-apply{
+        display: flex;
+        flex-direction: row;
+    }
+}
+.reset{
+    color: #FF858E;
+    background-color: #FFFFFF;
+    border: 1px solid #FF858E;
+    margin:8% 0% 0% -10%;
+    padding: 20% 30%;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.apply{
+    background-color: #F44848;
+    color: white;
+    border-style: none ;
+    margin: 9% 0% 0% 80%;
+    padding: 23% 30%;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.vector-element{
+    padding: 5px 11px;
+    border-style: none;
+    border-radius: 6px;
+    cursor: pointer;
+    color: #818282;
+    background-color: #EAEBEE;
+}
+.selected-vector-element{
+    padding: 5px 11px;
+    border-style: none;
+    border-radius: 6px;
+    background-color: #F44848;
+    cursor: pointer;
+    color: white;
+}

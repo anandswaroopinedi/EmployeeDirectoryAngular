@@ -1,0 +1,137 @@
+<div class="employee-info">
+    <div class="emp-table-icons">
+        <div class="icons-left">
+            <img src="../../../assets/arrowTurnLeftDown.png" class="arrow-image">
+            <button class="delete" (click)="deleteEmployees()" [ngClass]="this.checkedEmployeesCount?'activate-delete':'deactivate-delete'">Delete</button>
+        </div>
+        <div class="icons-right">
+            <img src="../../../assets/tableAdd.png" class="table-img">
+        </div>
+    </div>
+    <table id="employeeDataTable">
+        <thead>
+            <tr class="emp-details-head">
+                <th><input type="checkbox" (click)="selectAll()" class="head-check-box"></th>
+                <th>
+                    <div class="table-header">
+                        <h6 class="emp-head">USER</h6>
+                        <div class="angular-brackets">
+                            <p class="less-than" (click)="sortTable('FirstName','asc')">&lt;</p>
+                            <p class="greater-than" (click)="sortTable('FirstName','desc')">&gt;</p>
+                        </div>
+                    </div>
+                </th>
+                <th>
+                    <div class="table-header">
+                        <h6 class="emp-head">LOCATION</h6>
+                        <div class="angular-brackets">
+                            <p class="less-than" (click)="sortTable('Location','asc')">&lt;</p>
+                            <p class="greater-than" (click)="sortTable('Location','desc')">&gt;</p>
+                        </div>
+                    </div>
+                </th>
+                <th>
+                    <div class="table-header">
+                        <h6 class="emp-head" >DEPARTMENT</h6>
+                        <div class="angular-brackets">
+                            <p class="less-than" (click)="sortTable('Department','asc')">&lt;</p>
+                            <p class="greater-than" (click)="sortTable('Department','desc')">&gt;</p>
+                        </div>
+                    </div>
+                </th>
+                <th>
+                    <div class="table-header">
+                        <h6 class="emp-head">ROLE</h6>
+                        <div class="angular-brackets">
+                            <p class="less-than" (click)="sortTable('JobTitle','asc')">&lt;</p>
+                            <p class="greater-than" (click)="sortTable('JobTitle','desc')">&gt;</p>
+                        </div>
+                    </div>
+                </th>
+                <th>
+                    <div class="table-header">
+                        <h6 class="emp-head">EMPNO</h6>
+                        <div class="angular-brackets">
+                            <p class="less-than" (click)="sortTable('Id','asc')">&lt;</p>
+                            <p class="greater-than" (click)="sortTable('Id','desc')">&gt;</p>
+                        </div>
+                    </div>
+                </th>
+                <th>
+                    <div class="table-header">
+                        <h6 class="emp-head">STATUS</h6>
+                        <div class="angular-brackets">
+                            <p class="less-than" (click)="sortTable('Status','asc')">&lt;</p>
+                            <p class="greater-than" (click)="sortTable('Status','desc')">&gt;</p>
+                        </div>
+                        </div>
+                    </th>
+                <th>
+                    <div class="table-header">
+                        <h6 class="emp-head">JOIN DT</h6>
+                        <div class="angular-brackets">
+                            <p class="less-than" (click)="sortTable('JoinDate','asc')">&lt;</p>
+                            <p class="greater-than" (click)="sortTable('JoinDate','desc')">&gt;</p>
+                        </div>
+                    </div>
+                </th>
+                <th>
+                    <h4 class="head-ellipsis">...</h4>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @for(employee of employeeData;track employee;let i = $index)
+            {
+                <tr class="emp-details">
+                    <td><input type="checkbox" (click)="selectOne(employee.id,$event)" class="check-box"></td>
+                    <td>
+                        <div class="emp-image">
+                            <div>
+                                <img src="assets/Anand.jpg" class="user-img"/>
+                            </div>
+                            <div class="user-details">
+                                <p><b class="emp-name">{{employee.firstName+' '+employee.lastName}}</b><br><p class="emp-mail">{{employee.email}}</p></p>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="emp-location">
+                        {{employee.location}}
+                    </td>
+                    <td class="emp-department">
+                        {{employee.department}}
+                    </td>
+                    <td>
+                        {{employee.jobTitle}}
+                    </td>
+                    <td class="emp-no">
+                        {{employee.id}}
+                    </td>
+                    <td>
+                        <!-- <button class="active-status" *ngif(=="In Active") [ngStyle]="{'backgroundColor' : '#F89191','color' : 'white'}"></button> -->
+                        <button class="active-status">{{employee.status.id}}</button>
+                    </td>
+                    <td>
+                        {{employee.joinDate}}
+                    </td>
+                    <td>
+                        <div class="ellipsis-menu">
+                            <h4 class="child-ellipsis"  (click)="showMenuOptions(i)">...</h4>
+                            <div class="menu-options">
+                                <div class="menu-option">
+                                    View Details
+                                </div>
+                                <div class="menu-option">
+                                    Edit
+                                </div>
+                                <div class="menu-option" (click)="deleteEmployeeUsingEllipsis(i)">
+                                    Delete
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

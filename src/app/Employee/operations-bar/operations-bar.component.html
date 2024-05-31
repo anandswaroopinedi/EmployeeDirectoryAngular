@@ -1,0 +1,78 @@
+<div class="operations-bar">
+    <div class="operations-header">
+        <div>
+            <h6 class="header-heading">Employees</h6>
+            <p class="header-heading-desc">Find all of your company's employee accounts and their associated roles.</p>
+        </div>
+        <div class="accessing-buttons">
+            <button class="export-button" onclick="exportData()">EXPORT</button>
+                <span>&#10010;</span>
+                <button class="add-button" routerLink="/addemployee">  ADD EMPLOYEE</button>
+        </div>
+    </div>
+    <div class="button-group">
+            <img src="../../../assets/filterBlack.svg" class="my-auto">
+            @for(item of counter(26);track item;let i = $index)
+            {
+                <div>
+                    <button (click)="filterDataByAlphabet(i)" class="vector-element">{{getAlphabet(i)}}</button>
+                </div>
+            }
+    </div>
+    <div class="filter">
+        <pre class="filter-name">Filter</pre>
+        <div class="filter-status-div">
+            <div  class="dropdown">
+                <button (click)="selectStatusDropDown()" class="dropbtn">({{statusSelectedCount}}) Status
+                </button>
+                <div [style.visibility]="isStatusDropDownHidden? 'hidden': 'visible'" class="dropdown-content">
+                    <div class="dropdown-entry">
+                        <input type="checkbox" id="active" class="status-check" name="status-check" value="active" (change)="checkStatus('active',$event)">
+                        <label for="active">Active</label>
+                    </div>
+                    <div class="dropdown-entry">
+                        <input type="checkbox" id="inActive" class="status-check" name="status-check" value="In active" (change)="checkStatus('In active',$event)">
+                        <label for="inActive">InActive</label>
+                    </div>
+                </div>
+            </div>
+        </div> 
+        <div class="filter-location-div">
+            <div class="dropdown">
+                <button (click)="selectLocationDropDown()" class="dropbtn">({{locationSelectedCount}}) Location
+                </button>
+                <div [style.visibility]="isLocationDropDownHidden? 'hidden': 'visible'" class="dropdown-content">
+                    @for(location of locations;track location)
+                    {
+                        <div class="dropdown-entry">
+                            <input type="checkbox" id="loc-hyderabad" class="status-check" name="status-check" (change)="checkLocation(location.id,$event)">
+                            <label >{{location.name}}</label>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="filter-department-div">
+            <div class="dropdown">
+                <button (click)="selectDepartmentDropDown()"  class="dropbtn">({{departmentSelectedCount}})Department</button>
+                <div [style.visibility]="isDepartmentDropDownHidden? 'hidden': 'visible'" class="dropdown-content">
+                    @for (department of departments; track department)
+                    {
+                        <div class="dropdown-entry" >
+                            <input type="checkbox" class="status-check" name="status-check" (change)="checkDepartment(department.id,$event)">
+                            <label >{{department.name}}</label>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div [style.visibility]="statusSelectedCount||locationSelectedCount||departmentSelectedCount? 'visible': 'hidden'"  class="filter-reset-apply">
+            <div>
+                <button class="reset" (click)="reset()">Reset</button>
+            </div>
+            <div>
+                <button class="apply" (click)="filterByUserInputs()">Apply</button>
+            </div>  
+        </div>
+    </div>
+</div>
