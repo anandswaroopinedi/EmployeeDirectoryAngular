@@ -1,6 +1,6 @@
 export interface FilterData{
     Alphabet:string;
-    Statuses:string[];
+    Statuses:number[];
     Departments:number[];
     Locations:number[];
 }

@@ -1,79 +1,37 @@
-.operations-bar{
-    display:flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-.operations-header{
+.header{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    margin-top: 1%;
-    height: 60px;
-    align-items: center;
+    margin-top: -1%;
 }
-.header-heading{
-    margin-top: 2%;
+.page-heading{
     color: #3B5064;
+    margin-top: 12%;
 }
 
-.header-heading-desc{
+.page-heading-desc{
     color: #83909a;
-    font-size: 13px;
 }
 .accessing-buttons{
     justify-content: space-between;
-    font-size: 12px;
-    align-items: center;
-}
-
-.export-button{
-    background-color: rgb(255, 255, 255);
-    background-image: url(../../../assets/maskedIcon.png);
-    border: 1px solid rgb(151, 149, 149);
-    background-repeat: no-repeat;
-    background-size: 15px;
-    background-position-x: 14px;
-    background-position-y: 6px;
-    padding: 5px 25px 5px 35px;
-    border-radius: 8px;
-    color: #818282;
-    cursor: pointer;
 }
 span {
     content: "\271A";
     color:white;
     position: relative;
-    left: 18%;
+    left: 20%;
     cursor: pointer;
   }
 .add-button{
     background-color: #F44848;
     border-style: none;
-    padding: 10px 25px 10px 55px;
-    margin:0px 10px;
-    border-radius: 8px;
+    padding: 4px 10px 4px 30px;
+    margin:5px 10px;
+    border-radius: 5px;
     color: white;
     cursor: pointer;
-}
-.button-group{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    height: 30px;
-    margin-top:1%;
-    width:100%;
-}
-.alphabet-btns{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    width: 160%;
-    background-color: red;
-}
-.vector-area{
-    padding-top: 0.7%;
 }
 .filter{
     display: flex;
@@ -102,18 +60,7 @@ span {
     color: rgb(254, 99, 99);
     font-family: poppins;
 }
-.filter-status-div{
-    margin-left: 3%;
-}
 
-.filter-status{
-    padding: 12%;
-    border: 1px solid #FBC0C0;
-    border-radius: 6px;
-    color: #7A859B;
-    display: inline-block;
-    position: relative;
-}
 .dropbtn {
     display: flex;
     justify-content: space-between;
@@ -172,10 +119,7 @@ span {
 .dropdown-entry label{
     margin-left: 4%;
 }
-#status-check{
-    cursor: pointer;
-    width: 15px;
-}
+
 
 .filter-location-div{
     margin-left: 3%;
@@ -200,7 +144,7 @@ span {
 .filter-reset-apply{
     display: flex;
     flex-direction: row;
-    margin-left:42%;
+    margin-left:55%;
 }
 @media only screen and (max-width: 1430px) {
     .filter-reset-apply{
@@ -234,19 +178,3 @@ span {
     cursor: pointer;
 }
 
-.vector-element{
-    padding: 5px 11px;
-    border-style: none;
-    border-radius: 6px;
-    cursor: pointer;
-    color: #818282;
-    background-color: #EAEBEE;
-}
-.selected-vector-element{
-    padding: 5px 11px;
-    border-style: none;
-    border-radius: 6px;
-    background-color: #F44848;
-    cursor: pointer;
-    color: white;
-}

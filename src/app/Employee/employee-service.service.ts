@@ -9,10 +9,8 @@ import axios from 'axios';
 })
 export class EmployeeServiceService {
   employees:Employee[]=[];
-  alphabet$:Subject<string>; 
   filterData$:Subject<FilterData>;
   constructor(private http:HttpClient ) {
-    this.alphabet$ = new Subject<string>();
     this.filterData$=new Subject<FilterData>();
    }
 
@@ -22,57 +20,8 @@ export class EmployeeServiceService {
     Employees.subscribe((emp)=>{
       console.log(emp[0].status.id);
     })
-    debugger
-    return this.http.get<Employee[]>(`https://localhost:7262/api/Employee/GetAllEmployees`);
-  }
-  getFilteredData(alphabet:string):Observable<Employee[]>
-  {
-    // var Employees=this.http.get<Employee[]>(`https://localhost:7262/api/Employee/`+alphabet);
-    // Employees.subscribe((emp)=>{
-    //   this.http.get<Employee[]>(`https://localhost:7262/api/Employee/`+alphabet).pipe(
-    //     map((data: any) => {
-    //       return data.map((employeeData: any) => {
-    //         return {
-    //           firstName: employeeData.firstName,
-    //           lastName: employeeData.lastName,
-    //           id:employeeData.id,
-    //           department:employeeData.department,
-    //           jobTitle:employeeData.jobTitle,
-    //           email:employeeData.email,
-    //           location:employeeData.location,
-    //           joinDate:employeeData.joinDate,
-    //           status: {
-    //             id: employeeData.status.id, 
-    //             statusName: employeeData.status.statusName,
-    //           },
-    //         } as Employee; // Cast to Employee interface for type safety
-    //       });
-    //     })
-    //   );
-    //   return this.http.get<Employee[]>(`https://localhost:7262/api/Employee/`+alphabet);
-    // })
     
-    // return this.http.get<Employee[]>(`https://localhost:7262/api/Employee/`+alphabet).pipe(
-    //   map((data: any) => {
-    //     return data.map((employeeData: any) => {
-    //       return {
-    //         firstName: employeeData.firstName,
-    //         lastName: employeeData.lastName,
-    //         id: employeeData.id,
-    //         department:employeeData.department,
-    //         jobTitle:employeeData.jobTitle,
-    //         email:employeeData.email,
-    //         location:employeeData.location,
-    //         joinDate:employeeData.joinDate,
-    //         status: {
-    //           id: employeeData.status?.id || null, 
-    //           statusName: employeeData.status?.statusName||null,
-    //         },
-    //       } as Employee; 
-    //     });
-    //   })
-    // );
-    return this.http.get<Employee[]>(`https://localhost:7262/api/Employee/`+alphabet);
+    return this.http.get<Employee[]>(`https://localhost:7262/api/Employee/GetAllEmployees`);
   }
   deleteEmployeeData(employeeIds:string[]):Observable<Employee[]>
   {
@@ -94,6 +43,6 @@ export class EmployeeServiceService {
   }
   ngOnDestroy()
   {
-    this.alphabet$.unsubscribe();
+    this.filterData$.unsubscribe();
   }
 }

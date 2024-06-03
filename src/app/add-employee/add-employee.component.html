@@ -1,69 +1,107 @@
 <div class="emp-form">
-    <form onsubmit="return false">
+    <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
         <h5 class="header">Add Employee</h5>
-        <div class="emp-container">
-            <div class="profile">
+        <div class="emp-container" [ngStyle]="!isImageuploaded ?{'flex-direction':  'column'}:{ 'flex-direction': 'row'}">
+           <div class="profile">
                 <div class="profile-info">
-                    <img src="../../assets/profile.png" alt="profile" class="profile-pic">
-                    <button class="edit-button" onclick="document.getElementById('profileImg').click()">Edit</button>
-                    <input type='file' id="profileImg" accept=".jpg,.png,.bmp"  onchange="checkImage()">
+                    <img [src]="profileImg" alt="profile" class="profile-pic">
+                    <button #editButton class="edit-button" [ngStyle]="{'display': isImageuploaded ? 'flex' : 'None'}" (click)="inputImage()">Edit</button>
+                    <input formControlName="profileImage" type='file' #imgInput id="profileImg" accept=".jpg,.png,.bmp"  (change)="checkImage($event)">
                 </div>
-                <div class="text-danger-img">
-                    <button class="text-danger-imgbtn" onclick="document.getElementById('profileImg').click()">Upload Profile Picture</button>
+                <div class="upload-img" [ngStyle]="isImageuploaded?{'display':'None'}:{'display':'flex'}">
+                    <button class="upload-img-button" type="button" (click)="inputImage()">Upload Profile Picture</button>
+                    @if(employeeForm.controls['profileImage'].invalid && (isSubmitted||employeeForm.controls['profileImage'].touched || employeeForm.controls['profileImage'].dirty))
+                        {
+                            <div class="text-danger" *ngIf="employeeForm.controls['profileImage'].errors?.['required']">
+                                <img src="../../assets/invalid.png" class="inavalid" >
+                                <p class="danger-msg">This field is required</p>
+                            </div>
+                        }
                 </div>
             </div>
-            <div class="emp-info">
+            <div class="emp-info" [ngStyle]="isImageuploaded?{'margin-left':'2%'}:{'margin-left':'0%'}">
                 <div class="sub-sec-header">
                     <h5>Personal Information</h5>
                 </div>
                 <div class="sub-sec">
                     <div class="inner-sub-sec">
                         <label for="employee-no">Emp No</label>
-                        <input type="text" name="employee-no" id="employee-no"  class="form-input input-required" placeholder="Text(TZ002030)" onkeyup="checkEmployeeNo(0)">
-                        <div class="text-danger-empno">
-                            <img src="../../assets/invalid.png" class="inavalid">
-                            <p class="danger-msg">This field is required</p>
-                        </div>
+                        <input formControlName="id" type="text" name="employee-no" id="employee-no"  class="form-input input-required" placeholder="Text(TZ0001)" >
+                        @if(employeeForm.controls['id'].invalid && (isSubmitted||employeeForm.controls['id'].touched || employeeForm.controls['id'].dirty))
+                        {
+                            <div class="text-danger" *ngIf="employeeForm.controls['id'].errors?.['required']">
+                                <img src="../../assets/invalid.png" class="inavalid" >
+                                <p class="danger-msg">This field is required</p>
+                            </div>
+                            <div class="text-danger" *ngIf="employeeForm.controls['id'].errors?.['pattern']">
+                                <img src="../../assets/invalid.png" class="inavalid" >
+                                <p class="danger-msg">The Id should be in format TZ0001</p>
+                            </div>
+                        }
                     </div>
                 </div>
                 <div class="sub-sec">
                     <div class="inner-sub-sec">
                         <label for="first-name">First Name</label>
-                        <input type="text" name="first-name" id="first-name" class="form-input input-required" placeholder="Text" onkeyup="checkFirstName(0)">
-                        <div class="text-danger-fname">
-                            <img src="../../assets/invalid.png" class="inavalid">
-                            <p class="danger-msg">This field is required</p>
-                        </div>
+                        <input formControlName="firstName" type="text" name="first-name" id="first-name" class="form-input input-required" placeholder="Text" >
+                        @if(employeeForm.controls['firstName'].invalid && (isSubmitted||employeeForm.controls['firstName'].touched || employeeForm.controls['firstName'].dirty))
+                        {
+                            <div class="text-danger" *ngIf="employeeForm.controls['firstName'].errors?.['required']">
+                                <img src="../../assets/invalid.png" class="inavalid" >
+                                <p class="danger-msg">This field is required</p>
+                            </div>
+                            <div class="text-danger" *ngIf="employeeForm.controls['firstName'].errors?.['pattern']">
+                                <img src="../../assets/invalid.png" class="inavalid" >
+                                <p class="danger-msg">The First Name should not contains numbers</p>
+                            </div>
+                        }
                     </div>
                     <div class="inner-sub-sec">
                         <label for="last-name">Last Name</label>
-                        <input type="text" name="last-name" id="last-name" class="form-input input-required" placeholder="Text" onkeyup="checkLastName(0)" >
-                        <div class="text-danger-lname">
-                            <img src="../../assets/invalid.png" class="inavalid">
-                            <p class="danger-msg">This field is required</p>
-                        </div>
+                        <input formControlName="lastName" type="text" name="last-name" id="last-name" class="form-input input-required" placeholder="Text"  >
+                        @if(employeeForm.controls['lastName'].invalid && (isSubmitted||employeeForm.controls['lastName'].touched || employeeForm.controls['lastName'].dirty))
+                        {
+                            <div class="text-danger" *ngIf="employeeForm.controls['lastName'].errors?.['required']">
+                                <img src="../../assets/invalid.png" class="inavalid" >
+                                <p class="danger-msg">This field is required</p>
+                            </div>
+                            <div class="text-danger" *ngIf="employeeForm.controls['lastName'].errors?.['pattern']">
+                                <img src="../../assets/invalid.png" class="inavalid" >
+                                <p class="danger-msg">The Last Name should not contains numbers</p>
+                            </div>
+                        }
                     </div>
                     <div class="inner-sub-sec">
                         <label for="dob">Date of Birth</label>
-                        <input type="text" onfocus="(this.type='date')" name="dob" id="dob" class="form-input" placeholder="Select">    
+                        <input formControlName="dateOfBirth" type="text" onfocus="(this.type='date')" name="dob" id="dob" class="form-input" placeholder="Select">    
                     </div>
                 </div>
                 <div class="sub-sec1">
                     <div class="inner-sub-sec1">
                         <label for="email">Email Id</label>
-                        <input type="email" name="email" id="email" class="form-input input-required" placeholder="Joe.i@technovert.com" onkeyup="checkEmail(0)">
-                        <div class="text-danger-email">
-                            <img src="../../assets/invalid.png" class="inavalid">
-                            <p class="danger-msg">This field is required</p>
-                        </div>
+                        <input formControlName="email" type="email" name="email" id="email" class="form-input input-required" placeholder="Joe.i@technovert.com">
+                        @if(employeeForm.controls['email'].invalid && (isSubmitted||employeeForm.controls['email'].touched || employeeForm.controls['email'].dirty))
+                        {
+                            <div class="text-danger" *ngIf="employeeForm.controls['email'].errors?.['required']">
+                                <img src="../../assets/invalid.png" class="inavalid" >
+                                <p class="danger-msg">This field is required</p>
+                            </div>
+                            <div class="text-danger" *ngIf="employeeForm.controls['email'].errors?.['email']">
+                                <img src="../../assets/invalid.png" class="inavalid" >
+                                <p class="danger-msg">Enter valid email address</p>
+                            </div>
+                        }
                     </div>
                     <div class="inner-sub-sec">
                         <label for="mob-no">Mobile Number</label>
-                        <input type="tel" name="mob-no" id="mob-no" class="form-input" maxlength="10" placeholder="0000000000" onkeyup="checkMobileNo()">
-                        <div class="text-danger-mobno">
-                            <img src="../../assets/invalid.png" class="inavalid">
-                            <p class="danger-msg">This field is required</p>
-                        </div>
+                        <input formControlName="mobileNo" type="tel" name="mob-no" id="mob-no" class="form-input" maxlength="10" placeholder="0000000000" >
+                        @if(employeeForm.controls['mobileNo'].invalid && (isSubmitted||employeeForm.controls['mobileNo'].touched || employeeForm.controls['mobileNo'].dirty))
+                        {
+                            <div class="text-danger" *ngIf="employeeForm.controls['mobileNo'].errors?.['pattern']">
+                                <img src="../../assets/invalid.png" class="inavalid" >
+                                <p class="danger-msg">Enter 10 digit mobile number</p>
+                            </div>
+                        }
                     </div>
                 </div>
                 <div class="sub-sec-header1">
@@ -72,66 +110,103 @@
                 <div class="sub-sec">
                     <div class="inner-sub-sec1">
                         <label for="joining-date">Joining Date</label>
-                        <input type="text" onclick="(this.type='date')" name="joining-date" id="joining-date" class="form-input-large input-required" placeholder="12/08/2023" >
-                        <div class="text-danger-jndate">
-                            <img src="../../assets/invalid.png" class="inavalid1">
-                            <p class="danger-msg">This field is required</p>
-                        </div>
+                        <input formControlName="joiningDate" type="date"  name="joining-date" id="joining-date" class="form-input-large input-required" placeholder="12/08/2023" >
+                        @if(employeeForm.controls['joiningDate'].invalid && (isSubmitted||employeeForm.controls['joiningDate'].touched || employeeForm.controls['joiningDate'].dirty))
+                        {
+                            <div class="text-danger" *ngIf="employeeForm.controls['joiningDate'].errors?.['required']">
+                                <img src="../../assets/invalid.png" class="inavalid" >
+                                <p class="danger-msg">This field is required</p>
+                            </div>
+                        }
                     </div>
                     <div class="inner-sub-sec">
                         <label for="loacation">Location</label>
-                        <select name="location" id="location" class="selection">
-                            <option value="Hyderabad">Hyderabad</option>
-                            <option value="Bangalore">Bangalore</option>
-                            <option value="Chennai">Chennai</option>
-                            <option value="Guntur">Guntur</option>
-                            <option value="Vijayawada">Vijayawada</option>
+                        <select formControlName="location" name="location" id="location" class="selection">
+                            <option value="" selected disabled hidden>Select Location</option>
+                            @for(location of locations;track locations)
+                            {
+                                <option value="{{location.name}}">{{location.name}}</option>
+                            }
                         </select>
+                        @if(employeeForm.controls['location'].invalid && (isSubmitted||employeeForm.controls['location'].touched || employeeForm.controls['location'].dirty))
+                        {
+                            <div class="text-danger" *ngIf="employeeForm.controls['location'].errors?.['required']">
+                                <img src="../../assets/invalid.png" class="inavalid" >
+                                <p class="danger-msg">This field is required</p>
+                            </div>
+                        }
                     </div>
                 </div>
                 <div class="sub-sec2">
                     <div class="inner-sub-sec">
                         <label for="job-title">Job Title</label>
-                        <select name="job-title" id="job-title" class="selection">
-                            <option value="Architect">Architect</option>
-                            <option value="Full-stack Developer">Full-stack Developer</option>
-                            <option value="Sales specialist">Sales specialist</option>
-                            <option value="Project Manager">Project Manager</option>
+                        <select formControlName="role" name="job-title" id="job-title" class="selection">
+                            <option value="" selected disabled hidden>Select JobTitle</option>
+                            @for(role of roles;track role)
+                            {
+                                <option value="{{role.name}}">{{role.name}}</option>
+                            }
                         </select>
+                        @if(employeeForm.controls['role'].invalid && (isSubmitted||employeeForm.controls['role'].touched || employeeForm.controls['role'].dirty))
+                        {
+                            <div class="text-danger" *ngIf="employeeForm.controls['role'].errors?.['required']">
+                                <img src="../../assets/invalid.png" class="inavalid" >
+                                <p class="danger-msg">This field is required</p>
+                            </div>
+                        }
                     </div>
                     <div class="inner-sub-sec">
                         <label for="department">Department</label>
-                        <select name="department" id="department" class="selection">
-                            <option value="Sales">	Sales</option>
-                            <option value="Prod Engg">Prod Engg</option>
-                            <option value="HR">HR</option>
+                        <select formControlName="department" name="department" id="department" class="selection">
+                            <option value="" selected disabled hidden>Select Department</option>
+                            @for(dept of departments;track dept)
+                            {
+                                <option value="{{dept.name}}">{{dept.name}}</option>
+                            }
                         </select>
+                        @if(employeeForm.controls['department'].invalid && (isSubmitted||employeeForm.controls['department'].touched || employeeForm.controls['department'].dirty))
+                        {
+                            <div class="text-danger" *ngIf="employeeForm.controls['department'].errors?.['required']">
+                                <img src="../../assets/invalid.png" class="inavalid" >
+                                <p class="danger-msg">This field is required</p>
+                            </div>
+                        }
                     </div>
                 </div>
                 <div class="sub-sec3">
                     <div class="inner-sub-sec">
                         <label for="assign-manager">Assign Manager</label>
-                        <select name="assign-manager" id="assign-manager" class="selection1">
+                        <select formControlName="manager" name="assign-manager" id="assign-manager" class="selection">
                             <option value="" selected disabled hidden>Search</option>
-                            <option value="Santhosh">Santhosh</option>
-                            <option value="Mahfooz">Mahfooz</option>
-                            <option value="Hafeez">Hafeez</option>
+                            @for(man of managers;track man)
+                            {
+                                <option value="{{man.id}}">{{man.id+" "}}{{man.firstName}}</option>
+                            }
                         </select>
+
                     </div>
                     <div class="inner-sub-sec">
                         <label for="assign-project">Assign Project</label>
-                        <select name="assign-project" id="assign-project" class="selection1">
+                        <select formControlName="project" name="assign-project" id="assign-project" class="selection">
                             <option value="" selected disabled hidden>Search</option>
-                            <option value="Prod Engg">Prod Engg</option>
-                            <option value="UX">UX</option>
-                            <option value="HR">HR</option>
+                            @for(prj of projects;track prj)
+                            {
+                                <option value="{{prj.name}}">{{prj.name}}</option>
+                            }
                         </select>
+                        @if(employeeForm.controls['project'].invalid && (isSubmitted||employeeForm.controls['project'].touched || employeeForm.controls['project'].dirty))
+                        {
+                            <div class="text-danger" *ngIf="employeeForm.controls['project'].errors?.['required']">
+                                <img src="../../assets/invalid.png" class="inavalid" >
+                                <p class="danger-msg">This field is required</p>
+                            </div>
+                        }
                     </div>
                 </div>
                 <div class="sub-sec">
                     <div class="form-buttons">
-                        <button class="cancel" onclick="cancel()" >Cancel</button>
-                        <button id="myButton" class="add-Employee-button">Add Employee</button>
+                        <button class="cancel" type="reset" (click)="onCancel()" >Cancel</button>
+                        <button id="myButton" type="submit" class="add-Employee-button" >Add Employee</button>
                     </div>
                 </div>
             </div>

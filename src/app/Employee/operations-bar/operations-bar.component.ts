@@ -1,7 +1,5 @@
-import { Component,EventEmitter,OnDestroy,OnInit, Output } from '@angular/core';
-import { Employee } from '../employee';
+import { Component,ElementRef,EventEmitter,OnDestroy,OnInit, Output, ViewChild } from '@angular/core';
 import { EmployeeServiceService } from '../employee-service.service';
-import {EmployeeInfoComponent} from '../employee-info/employee-info.component'
 import { DepartmentServiceService } from '../../Department/department-service.service';
 import { Department } from '../../Department/department';
 import { Location } from '../../Location/location';
@@ -10,6 +8,8 @@ import { LocationService } from '../../Location/location.service';
 import { FilterData } from '../filter-data';
 import { Router } from '@angular/router';
 import { RouterLink } from '@angular/router';
+import { Status } from '../../status/status';
+import { StatusService } from '../../status/status.service';
 @Component({
   selector: 'app-operations-bar',
   standalone: true,
@@ -18,22 +18,27 @@ import { RouterLink } from '@angular/router';
   styleUrl: './operations-bar.component.scss'
 })
 export class OperationsBarComponent implements OnInit,OnDestroy {
-[x: string]: any;
+
   isStatusDropDownHidden:boolean=true;
   isLocationDropDownHidden:boolean=true;
   isDepartmentDropDownHidden:boolean=true;
   filterAlphabet:string="$";
   selectedDepartments:number[]=[];
-  selectedStatus:string[]=[];
+  selectedStatus:number[]=[];
   selectedLocations:number[]=[];
   departments?:Department[];
   locations?:Location[];
+  statuses?:Status[];
   deptSubscription?:Subscription;
   locSubscription?:Subscription;
+  statusSubscription?:Subscription;
   statusSelectedCount: number=0;
   locationSelectedCount: number=0;
   departmentSelectedCount: number=0;
-  constructor(private employeeService:EmployeeServiceService,private departmentService:DepartmentServiceService,private locationService:LocationService,private router:Router){}
+  resetFilterCheckBoxes:boolean=false;
+  @ViewChild('buttonsRef') alphabetButtonRef?: ElementRef;
+  @ViewChild('filterCheckBoxes') filterCheckBoxes?: ElementRef;
+  constructor(private employeeService:EmployeeServiceService,private departmentService:DepartmentServiceService,private locationService:LocationService,private statusService:StatusService,private router:Router){}
   ngOnInit(): void {
     this.deptSubscription=this.departmentService.getDepartments().subscribe((departmentData)=>
       {
@@ -43,12 +48,15 @@ export class OperationsBarComponent implements OnInit,OnDestroy {
     this.locSubscription=this.locationService.getLocations().subscribe((locationData)=>{
       this.locations=locationData;
     })
+    this.statusSubscription=this.statusService.getStatuses().subscribe((value)=>{
+      this.statuses=value;
+    })
   }
 getAlphabet(ascii:number) {
   return String.fromCharCode(65+ascii);
   // return 
 }
-checkStatus(value:string,event:any)
+checkStatus(value:number,event:any)
 {
   if(event.currentTarget.checked==true)
   {
@@ -104,12 +112,11 @@ selectDepartmentDropDown()
 {
   this.isDepartmentDropDownHidden=this.isDepartmentDropDownHidden?false:true;
 }
- filterDataByAlphabet(index:number) {
+ filterDataByAlphabet(index:number,event:any) {
   console.log(index);
   const alphabet:string=this.getAlphabet(index);
   console.log(alphabet);
-  const selectedVectorEle=document.getElementsByClassName("vector-element")[index] as HTMLElement;
-  const style=selectedVectorEle.style;
+  const style=event.currentTarget.style;
   console.log(style.backgroundColor);
   if(style.backgroundColor=='rgb(244, 72, 72)')
   {
@@ -123,18 +130,20 @@ selectDepartmentDropDown()
     style.color='white';
     this.filterAlphabet=alphabet;
   }
-  this.employeeService.alphabet$.next(this.filterAlphabet);
+  //this.employeeService.alphabet$.next(this.filterAlphabet);
+  this.filterByUserInputs()
   this.makeUnSelectBtnDefault(index);
 }
 makeUnSelectBtnDefault(index:number)
 {
+  const selectedVectorEle=this.alphabetButtonRef?.nativeElement.querySelectorAll('button.vector-element');
   for(let i=0;i<26;i++)
   {
     if(i!=index)
     {
-      const selectedVectorEle=document.getElementsByClassName("vector-element")[i] as HTMLElement;
-      selectedVectorEle.style.backgroundColor='#EAEBEE';
-      selectedVectorEle.style.color='#818282';
+      selectedVectorEle[i].style.backgroundColor='#EAEBEE';
+      selectedVectorEle[i].style.color='#818282';
+      debugger
     }
   }
 }
@@ -155,9 +164,7 @@ filterByUserInputs()
 reset()
 {
   this.makeFilterArraysDefault();
-  this.employeeService.alphabet$.next(this.filterAlphabet);
   this.filterByUserInputs();
-  debugger
 }
 makeFilterArraysDefault()
 {
@@ -170,6 +177,7 @@ makeFilterArraysDefault()
   this.isDepartmentDropDownHidden=true;
   this.isLocationDropDownHidden=true;
   this.isStatusDropDownHidden=true;
+  //const selectedCheckBoxes=this.filterCheckBoxes?.nativeElement.querySelectorAll('div.input.');
   const checkboxes=document.getElementsByClassName("status-check") as HTMLCollectionOf<HTMLInputElement>
   for(let i=0;i<checkboxes.length;i++)
   {
@@ -180,5 +188,6 @@ ngOnDestroy()
 {
   this.deptSubscription?.unsubscribe();
   this.locSubscription?.unsubscribe();
+  this.statusSubscription?.unsubscribe();
 }
 }

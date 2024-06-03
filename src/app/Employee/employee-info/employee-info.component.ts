@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, OnChanges, viewChild, ElementRef, ViewChild } from '@angular/core';
 import { EmployeeServiceService } from '../employee-service.service';
 import { Employee } from '../employee';
 import { CommonModule } from '@angular/common';
@@ -13,7 +13,6 @@ import { FilterData } from '../filter-data';
   styleUrl: './employee-info.component.scss',
 })
 export class EmployeeInfoComponent implements OnChanges,OnDestroy {
-  @Input() filterAlphabet:string='';
   @Input() filterData?:FilterData;
   subscribtion?: Subscription;
   employeeData: Employee[] = [];
@@ -21,38 +20,30 @@ export class EmployeeInfoComponent implements OnChanges,OnDestroy {
   checkedEmployeesCount:number=0;
   selectedEmployeesDelete:string[]=[];
   isShowOptionMenu:boolean=false;
+  @ViewChild('headCheckBoxChecked') headCheckBoxCheckedRef?:ElementRef;
+  isheadCheckBoxChecked: boolean=false;
   constructor(private employeeService: EmployeeServiceService) {
-    this.employeeData = employeeService.employees;
+    
+  }
+  ngOnInit()
+  {
+    this.employeeService.getEmployeeData().subscribe((employees)=>{
+      this.employeeData = employees;
+    });
     console.log(this.employeeData);
   }
-
   ngOnChanges()
   {
-    if(this.filterData==undefined || this.checkFiltersApplied())
-    {
-      debugger
-      this.subscribtion=this.employeeService.getFilteredData(this.filterAlphabet).subscribe({
-        next: (employees) => {
-          this.employeeData = employees;
-          console.log(this.employeeData);
-        },
-        error: (error) => console.error('error', error),
-      });
-    }
-    else
-    {
-      debugger
+    if(this.filterData!=undefined)
       this.employeeService.applyFilters(this.filterData).subscribe({
         next: (employees) => {
           this.employeeData = employees;
         },
         error: (error) => console.error('error', error),
       });
-    }
   }
   checkFiltersApplied()
   {
-    debugger
     if(this.filterData?.Locations.length||this.filterData?.Departments.length||this.filterData?.Statuses.length)
     {
       return false
@@ -62,19 +53,19 @@ export class EmployeeInfoComponent implements OnChanges,OnDestroy {
   selectOne(id:string,event:any)
   {
     if(event.currentTarget.checked==true)
+    {
       this.checkedEmployeesCount+=1;
-    // this.selectedEmployeesDelete.push(id);
+      this.selectedEmployeesDelete.push(id);
+    }
     else
     {
       this.checkedEmployeesCount-=1;
-      // this.selectedEmployeesDelete=this.selectedEmployeesDelete.filter(employee=> employee!=id)
-      const headCheckbox = document.querySelectorAll('.head-check-box')[0] as HTMLInputElement;
-      headCheckbox.checked=false
+      this.selectedEmployeesDelete=this.selectedEmployeesDelete.filter(empId=>empId!=id);
+      if (this.headCheckBoxCheckedRef) {
+        this.headCheckBoxCheckedRef.nativeElement.currentTarget.style.checked = false;
+      }  
     }
   }
-  // changeEmployeeTableView(employeesArr: Employee[]) {
-  //   this.employeeData = employeesArr;
-  // }
   selectAll()
   {
     this.checkAllEmployees=!this.checkAllEmployees;
@@ -92,20 +83,19 @@ export class EmployeeInfoComponent implements OnChanges,OnDestroy {
   }
   deleteEmployees()
   {
-    const checkboxes = document.querySelectorAll('.check-box') as NodeListOf<HTMLInputElement>;
-    this.employeeService.getEmployeeIds().subscribe((employeeIdsArray)=>{
-      const employeeIds:string[]=employeeIdsArray;
-      for(let i=0;i<checkboxes.length;i++)
-      {
-        if(checkboxes[i].checked==true)
-        this.selectedEmployeesDelete.push(employeeIds[i])
-      }
-      console.log(this.selectedEmployeesDelete);
-      debugger;
+    // const checkboxes = document.querySelectorAll('.check-box') as NodeListOf<HTMLInputElement>;
+    // this.employeeService.getEmployeeIds().subscribe((employeeIdsArray)=>{
+    //   const employeeIds:string[]=employeeIdsArray;
+    //   for(let i=0;i<checkboxes.length;i++)
+    //   {
+    //     if(checkboxes[i].checked==true)
+    //     this.selectedEmployeesDelete.push(employeeIds[i])
+    //   }
+    //   console.log(this.selectedEmployeesDelete);
       this.employeeService.deleteEmployeeData(this.selectedEmployeesDelete).subscribe((employees)=>{
         this.employeeData=employees;
       }); 
-    });
+    // });
     
   }
   sortTable(properety:string,order:string)
@@ -119,11 +109,13 @@ export class EmployeeInfoComponent implements OnChanges,OnDestroy {
     const ellipsisRef=document.getElementsByClassName('menu-options')[index] as HTMLInputElement;
     ellipsisRef.style.display=ellipsisRef.style.display=="block"?"None":"block";
   }
-  deleteEmployeeUsingEllipsis(index:number)
+  deleteEmployeeUsingEllipsis(id:string)
   {
-    const checkboxes = document.querySelectorAll('.check-box') as NodeListOf<HTMLInputElement>;
-    checkboxes[index].checked=true;
-    this.deleteEmployees();
+    var arr:string[]=[];
+    arr.push(id)
+    this.employeeService.deleteEmployeeData(arr).subscribe((employees)=>{
+      this.employeeData=employees;
+    }); 
   }
   ngOnDestroy(): void {
     this.subscribtion?.unsubscribe();

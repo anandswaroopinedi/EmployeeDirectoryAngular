@@ -10,14 +10,12 @@
                 <button class="add-button" routerLink="/addemployee">  ADD EMPLOYEE</button>
         </div>
     </div>
-    <div class="button-group">
-            <img src="../../../assets/filterBlack.svg" class="my-auto">
-            @for(item of counter(26);track item;let i = $index)
-            {
-                <div>
-                    <button (click)="filterDataByAlphabet(i)" class="vector-element">{{getAlphabet(i)}}</button>
-                </div>
-            }
+    <div #buttonsRef class="button-group">
+                <img src="../../../assets/filterBlack.svg" class="my-auto">
+                @for(item of counter(26);track item;let i = $index)
+                {
+                    <button (click)="filterDataByAlphabet(i,$event)" class="vector-element">{{getAlphabet(i)}}</button>
+                }
     </div>
     <div class="filter">
         <pre class="filter-name">Filter</pre>
@@ -26,14 +24,13 @@
                 <button (click)="selectStatusDropDown()" class="dropbtn">({{statusSelectedCount}}) Status
                 </button>
                 <div [style.visibility]="isStatusDropDownHidden? 'hidden': 'visible'" class="dropdown-content">
-                    <div class="dropdown-entry">
-                        <input type="checkbox" id="active" class="status-check" name="status-check" value="active" (change)="checkStatus('active',$event)">
-                        <label for="active">Active</label>
-                    </div>
-                    <div class="dropdown-entry">
-                        <input type="checkbox" id="inActive" class="status-check" name="status-check" value="In active" (change)="checkStatus('In active',$event)">
-                        <label for="inActive">InActive</label>
-                    </div>
+                    @for(status of statuses;track status)
+                    {
+                        <div class="dropdown-entry">
+                            <input type="checkbox"  class="status-check" name="status-check" (change)="checkStatus(status.id,$event)">
+                            <label >{{status.statusName}}</label>
+                        </div>
+                    }
                 </div>
             </div>
         </div> 

@@ -14,16 +14,10 @@ import { Router } from '@angular/router';
     imports: [OperationsBarComponent, CommonModule, EmployeeInfoComponent]
 })
 export class EmployeeBodyComponent implements OnInit {
-    alphabet:string='$';
     filterData?:FilterData;
     constructor(private employeeService:EmployeeServiceService,private router:Router){}
     ngOnInit()
     {
-        this.employeeService.alphabet$.subscribe(
-            (input) => {
-                debugger
-                this.alphabet=input;
-            });
         this.employeeService.filterData$.subscribe(
                 (value)=>{
                     this.filterData=value;

@@ -11,7 +11,7 @@
     <table id="employeeDataTable">
         <thead>
             <tr class="emp-details-head">
-                <th><input type="checkbox" (click)="selectAll()" class="head-check-box"></th>
+                <th><input #headCheckBoxChecked type="checkbox" (click)="selectAll()" class="head-check-box"></th>
                 <th>
                     <div class="table-header">
                         <h6 class="emp-head">USER</h6>
@@ -88,7 +88,7 @@
                     <td>
                         <div class="emp-image">
                             <div>
-                                <img src="assets/Anand.jpg" class="user-img"/>
+                                <img src="employee.profileImage" class="user-img"/>
                             </div>
                             <div class="user-details">
                                 <p><b class="emp-name">{{employee.firstName+' '+employee.lastName}}</b><br><p class="emp-mail">{{employee.email}}</p></p>
@@ -109,7 +109,7 @@
                     </td>
                     <td>
                         <!-- <button class="active-status" *ngif(=="In Active") [ngStyle]="{'backgroundColor' : '#F89191','color' : 'white'}"></button> -->
-                        <button class="active-status">{{employee.status.id}}</button>
+                        <button class="active-status">{{employee.status.statusName}}</button>
                     </td>
                     <td>
                         {{employee.joinDate}}
@@ -124,7 +124,7 @@
                                 <div class="menu-option">
                                     Edit
                                 </div>
-                                <div class="menu-option" (click)="deleteEmployeeUsingEllipsis(i)">
+                                <div class="menu-option" (click)="deleteEmployeeUsingEllipsis(employee.id)">
                                     Delete
                                 </div>
                             </div>

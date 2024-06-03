@@ -1,0 +1,50 @@
+<div class="header">
+    <div>
+        <h5 class="page-heading">Roles</h5>
+        <p class="page-heading-desc">All the roles are configured here.</p>
+    </div>
+    <div class="accessing-buttons">
+        <span onclick="window.location.href = 'addrole.html';">&#10010;</span>
+        <button class="add-button" onclick="window.location.href = 'addrole.html';">ADD ROLE</button>
+    </div>
+</div>
+<div class="filter">
+    <pre class="filter-name">Filter</pre>
+    <div class="filter-location-div">
+        <div class="dropdown">
+            <button (click)="selectLocationDropDown()" class="dropbtn">({{locationSelectedCount}}) Location
+            </button>
+            <div [style.visibility]="isLocationDropDownHidden? 'hidden': 'visible'" class="dropdown-content">
+                @for(location of locations;track location)
+                {
+                    <div class="dropdown-entry">
+                        <input type="checkbox" id="loc-hyderabad" class="status-check" name="status-check" (change)="checkLocation(location.id,$event)">
+                        <label >{{location.name}}</label>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="filter-department-div">
+        <div class="dropdown">
+            <button (click)="selectDepartmentDropDown()"  class="dropbtn">({{departmentSelectedCount}})Department</button>
+            <div [style.visibility]="isDepartmentDropDownHidden? 'hidden': 'visible'" class="dropdown-content">
+                @for (department of departments; track department)
+                {
+                    <div class="dropdown-entry" >
+                        <input type="checkbox" class="status-check" name="status-check" (change)="checkDepartment(department.id,$event)">
+                        <label >{{department.name}}</label>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div [style.visibility]="locationSelectedCount||departmentSelectedCount? 'visible': 'hidden'"  class="filter-reset-apply">
+        <div>
+            <button class="reset" (click)="reset()">Reset</button>
+        </div>
+        <div>
+            <button class="apply" (click)="filterByUserInputs()">Apply</button>
+        </div>  
+    </div>
+</div>

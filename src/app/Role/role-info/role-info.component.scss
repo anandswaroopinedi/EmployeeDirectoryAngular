@@ -1,0 +1,83 @@
+.role-types{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.role-particular{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 28%;
+    margin-top: 2%;
+    margin-left:2%;
+    margin-bottom: 0.5%;
+    padding: 2% 1.5%;
+    box-shadow: 1px 1px 1px rgb(196, 194, 194),-1px -1px 1px rgb(196, 194, 194);
+}
+@media only screen and (max-width: 991px) {
+    .role-types{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin: 5% 10% 0% 10%;
+    }
+    .role-particular{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 45%;
+        height: 25vw;
+        margin:2%;
+        padding: 2%;
+        margin-top: 2%;
+        box-shadow: 1px 1px 1px rgb(196, 194, 194),-1px -1px 1px rgb(196, 194, 194);
+    }
+}
+.role-particular-subsec{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.role-particular-subsec1{
+    margin-top: 5%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.role-particular-subsec2{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.role-particular-comb{
+    display: flex;
+    flex-direction: row;
+}
+.role-particular-comb h4{
+    margin-left: 4%;
+}
+.role-particular-comb img{
+    margin-top: -8%;
+}
+.role-types h4{
+    color: #7B879C;
+    font-size: 1.2vw;
+}
+.view-emp{
+    margin-top: 5%;
+    padding-right: 10%;
+    text-decoration: none;
+    color:#7B879C;
+    background-image: url(../../../assets/Vector.svg);
+    background-repeat: no-repeat;
+    background-position-x: 140px;
+    background-position-y: 8px;
+}
+.stacked-icon{
+    width: 7vw;
+    margin-top: -3%;
+}
+.edit-changes{
+    width: 20px;
+}

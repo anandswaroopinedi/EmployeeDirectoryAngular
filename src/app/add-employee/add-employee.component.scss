@@ -7,9 +7,6 @@
     flex:20% 80%;
     margin-right:2%
 }
-.sub-sec-header
-{
-}
 .sub-sec{
     display: flex;
     flex-direction: row;
@@ -47,9 +44,9 @@
     display: flex;
     flex-direction: row;
 }
-.text-danger-empno{
-    display:none;
-    margin: -4% 0% 0% 3%;
+.text-danger{
+    display: flex;
+    margin: 0% 0% 0% 3%;
     flex-direction: row;
 }
 .text-danger-email{
@@ -72,10 +69,9 @@
     margin: -4% 0% 0% 3%;
     flex-direction: row;
 }
-.text-danger-img{
-    display:none;
+.upload-img{
     margin-left: 8%;
-    flex-direction: row;
+    flex-direction: column;
 }
 .text-danger-jndate{
     display:none;
@@ -85,7 +81,7 @@
 .inavalid{
     width: 10px;
     height: 12px;
-    margin: 8% 3% 0% 0%;
+    margin: 1.5% 3% 0% 0%;
 }
 .inavalid1{
     width: 10px;
@@ -95,12 +91,13 @@
 .danger-msg{
     color:red;
     font-size: 13px;
+    margin: 0%;
 }
 .danger-msg-img{
     color: #fa5a5a;
     font-size: 20px;
 }
-.text-danger-imgbtn{
+.upload-img-button{
     background-color: #fa5a5a;
     color: white;
     width: 15vw;
@@ -188,7 +185,6 @@
     color: white;
     border: none;
     border-radius: 10%;
-    padding: 9px 9px 9px 9px;
     cursor: pointer;
 }
 .form-input-large:focus{
