@@ -1,0 +1,75 @@
+<div class="role-form">
+    <form [formGroup]="roleForm">
+        <div class="role-sec">
+            <h5>Create New Role</h5>
+            <div class="subsec">
+                <div class="role-item">
+                    <label >Role Name</label>
+                    <input formControlName="roleName" type="text"  class="form-input" placeholder="Text" >
+                    @if(roleForm.controls['roleName'].invalid && (isSubmitted||roleForm.controls['roleName'].touched || roleForm.controls['roleName'].dirty))
+                        {
+                            <div class="text-danger" *ngIf="roleForm.controls['roleName'].errors?.['required']">
+                                <img src="../../assets/invalid.png" class="invalid" >
+                                <p class="danger-msg">This field is required</p>
+                            </div>
+                        }
+                </div>
+                <div class="role-item">
+                    <label for="department">Department</label>
+                    <select formControlName="departmentId"  class="selection" placeholder="Select Department">
+                        <option value=null selected disabled hidden>Select Department</option>
+                        @for(dept of departments;track dept)
+                        {
+                            <option value={{dept.id}}>{{dept.name}}</option>   
+                        }
+                    </select>
+                </div>
+            </div>
+            
+        </div>
+        <div class="role-item">
+            <label for="desc">Description</label>
+            <textarea formControlName="description"  rows="6" placeholder="Text"></textarea>
+        </div>
+        <div class="role-item">
+            <label for="loacation">Location</label>
+            <select formControlName="locationId" class="selection">
+                <option value=null selected disabled hidden>Select Location</option>
+                @for(loc of locations;track loc)
+                {
+                    <option value={{loc.id}}>{{loc.name}}</option>   
+                }
+            </select>
+        </div>
+        <div class="role-item">
+            <div class="multiselect">
+                <label for="assign-emp">Assign Employees</label>
+                <div class="selectBox" >
+                    <input type="text" class="selection1" placeholder="Search for an employee" (keyup)="selectEmployees($event)">
+                    <p class="icon-select">&lt;</p>
+                </div>
+                <div id="checkboxes" >
+                    @for(emp of employees;track emp)
+                    {
+                        <div class="item1">
+                            <div class="inner-item1">
+                            <img src={{emp.profileImage}} class="profile-pic">
+                            <h6 class="item-name">{{emp.firstName}}</h6>
+                            </div>
+                            <input type="checkbox"  id="checkbox-1" value={{emp.id}} (click)="CheckEmployee(emp.id,$event)" />
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="role-item">
+            <div>
+                <div class="form-buttons">
+                    <button (click)="ReturnToRolesPage()" class="cancel" onclick="window.location.href = 'roles.html';" >Cancel</button>
+                    <button type="submit" (click)="OnSubmit()"  class="add-role-button">Add Role</button>
+                </div>
+            </div>
+        </div>
+    </form> 
+</div>
+<div [ngClass]="isSuccesfullyAdded?'show':''" id="snackbar">{{postMessage}}</div>

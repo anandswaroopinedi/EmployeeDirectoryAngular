@@ -1,9 +1,12 @@
 import { Department } from "../Department/department";
 
 export interface Role{
-    id:number;
+    id:number|null;
     name:string;
-    department:Department;
-    location:Location;
+    departmentid:number;
+    departmentName:string;
+    locationId:number;
+    locationName:string;
     description:string;
+    roleDeptLocId:number;
 }

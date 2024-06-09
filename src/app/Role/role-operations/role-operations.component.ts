@@ -1,36 +1,36 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { DepartmentServiceService } from '../../Department/department-service.service';
 import { LocationService } from '../../Location/location.service';
 import { Department } from '../../Department/department';
 import { Location } from '../../Location/location';
+import { FilterDropdownComponent } from "../../Shared Components/filter-dropdown/filter-dropdown.component";
+import { FilterControlButtonsComponent } from "../../Shared Components/filter-control-buttons/filter-control-buttons.component";
+import { RoleService } from '../role.service';
+import { FilterData } from '../../Employee/filter-data';
+import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-role-operations',
-  standalone: true,
-  imports: [],
-  templateUrl: './role-operations.component.html',
-  styleUrl: './role-operations.component.scss'
+    selector: 'app-role-operations',
+    standalone: true,
+    templateUrl: './role-operations.component.html',
+    styleUrl: './role-operations.component.scss',
+    imports: [FilterDropdownComponent, FilterControlButtonsComponent,RouterLink]
 })
 export class RoleOperationsComponent {
-reset() {
-throw new Error('Method not implemented.');
-}
-filterByUserInputs() {
-throw new Error('Method not implemented.');
-}
-  isLocationDropDownHidden:boolean=true;
-  isDepartmentDropDownHidden:boolean=true;
+  @ViewChild('locationFilter') locationFilter?: FilterDropdownComponent;
+  @ViewChild('departmentFilter') departmentFilter?: FilterDropdownComponent;
   departments?:Department[];
   locations?:Location[];
   selectedDepartments:number[]=[];
   selectedLocations:number[]=[];
   deptSubscription?:Subscription;
   locSubscription?:Subscription;
-  locationSelectedCount: number=0;
-  departmentSelectedCount: number=0;
-  resetFilterCheckBoxes:boolean=false;
-  constructor(private departmentService:DepartmentServiceService,private locationService:LocationService)
+  filter1:string='Department';
+  filter2:string='Location';
+  isLocFilterOptionsSelected:boolean=false;
+  isDeptFilterOptionsSelected:boolean=false;
+  constructor(private departmentService:DepartmentServiceService,private locationService:LocationService,private roleService:RoleService)
   {
     this.deptSubscription=this.departmentService.getDepartments().subscribe((departmentData)=>
       {
@@ -41,40 +41,46 @@ throw new Error('Method not implemented.');
       this.locations=locationData;
     })
   }
-  checkDepartment(departmentId:number,event:any)
-{
-  if(event.currentTarget.checked==true)
+  LocationFilterApplied(isSelected:boolean)
   {
-    this.departmentSelectedCount+=1
-    this.selectedDepartments.push(departmentId);
+    if(isSelected)
+    {
+      this.isLocFilterOptionsSelected=true;
+    }
+    else
+    {
+      this.isLocFilterOptionsSelected=false;
+    }
   }
-  else
+  DepartmentFilterApplied(isSelected:boolean)
   {
-    this.departmentSelectedCount-=1
-    this.selectedDepartments=this.selectedDepartments.filter(item=>item!=departmentId)
+    if(isSelected)
+    {
+      this.isDeptFilterOptionsSelected=true;
+    }
+    else
+    {
+      this.isDeptFilterOptionsSelected=false;
+    }
   }
-  console.log(this.selectedDepartments);
-}
-checkLocation(locationId:number,event:any)
-{
-  if(event.currentTarget.checked==true)
+  filterApply(isApplied:boolean)
   {
-    this.locationSelectedCount+=1
-    this.selectedLocations.push(locationId);
+    
+    if(isApplied)
+    {
+      var inputFilters:FilterData=new FilterData();
+      inputFilters.Locations=this.locationFilter!.selectedFiltersIdsArray();
+      inputFilters.Departments=this.departmentFilter!.selectedFiltersIdsArray();
+      console.log(inputFilters)
+      debugger;
+      this.roleService.filterData$.next(inputFilters);
+    }
   }
-  else
-  {
-    this.locationSelectedCount-=1
-    this.selectedLocations=this.selectedLocations.filter(item=>item!=locationId)
+  filterReset(isReset:boolean)
+  { 
+    var inputFilters:FilterData=new FilterData();
+    this.locationFilter!.reset();
+    this.departmentFilter!.reset();
+    this.roleService.filterData$.next(inputFilters);
   }
-  console.log(this.selectedLocations)
-}
-selectLocationDropDown()
-{
-  this.isLocationDropDownHidden=this.isLocationDropDownHidden?false:true;
-}
-selectDepartmentDropDown()
-{
-  this.isDepartmentDropDownHidden=this.isDepartmentDropDownHidden?false:true;
-}
 }

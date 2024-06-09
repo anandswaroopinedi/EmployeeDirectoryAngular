@@ -4,47 +4,19 @@
         <p class="page-heading-desc">All the roles are configured here.</p>
     </div>
     <div class="accessing-buttons">
-        <span onclick="window.location.href = 'addrole.html';">&#10010;</span>
-        <button class="add-button" onclick="window.location.href = 'addrole.html';">ADD ROLE</button>
+        <span routerLink="/addrole">&#10010;</span>
+        <button class="add-button" routerLink="/addrole">ADD ROLE</button>
     </div>
 </div>
 <div class="filter">
     <pre class="filter-name">Filter</pre>
     <div class="filter-location-div">
-        <div class="dropdown">
-            <button (click)="selectLocationDropDown()" class="dropbtn">({{locationSelectedCount}}) Location
-            </button>
-            <div [style.visibility]="isLocationDropDownHidden? 'hidden': 'visible'" class="dropdown-content">
-                @for(location of locations;track location)
-                {
-                    <div class="dropdown-entry">
-                        <input type="checkbox" id="loc-hyderabad" class="status-check" name="status-check" (change)="checkLocation(location.id,$event)">
-                        <label >{{location.name}}</label>
-                    </div>
-                }
-            </div>
-        </div>
+        <app-filter-dropdown #locationFilter (isSelected)="LocationFilterApplied($event)" [filterName]="filter2" [dropDownData]="locations"></app-filter-dropdown>
     </div>
     <div class="filter-department-div">
-        <div class="dropdown">
-            <button (click)="selectDepartmentDropDown()"  class="dropbtn">({{departmentSelectedCount}})Department</button>
-            <div [style.visibility]="isDepartmentDropDownHidden? 'hidden': 'visible'" class="dropdown-content">
-                @for (department of departments; track department)
-                {
-                    <div class="dropdown-entry" >
-                        <input type="checkbox" class="status-check" name="status-check" (change)="checkDepartment(department.id,$event)">
-                        <label >{{department.name}}</label>
-                    </div>
-                }
-            </div>
-        </div>
+        <app-filter-dropdown #departmentFilter (isSelected)="DepartmentFilterApplied($event)" [filterName]="filter1" [dropDownData]="departments"></app-filter-dropdown>
     </div>
-    <div [style.visibility]="locationSelectedCount||departmentSelectedCount? 'visible': 'hidden'"  class="filter-reset-apply">
-        <div>
-            <button class="reset" (click)="reset()">Reset</button>
-        </div>
-        <div>
-            <button class="apply" (click)="filterByUserInputs()">Apply</button>
-        </div>  
+    <div class="filter-Control-Buttons">
+        <app-filter-control-buttons (isApply)="filterApply($event)" (isReset)="filterReset($event)" [isDisplayed]="isLocFilterOptionsSelected||isDeptFilterOptionsSelected"></app-filter-control-buttons>
     </div>
 </div>

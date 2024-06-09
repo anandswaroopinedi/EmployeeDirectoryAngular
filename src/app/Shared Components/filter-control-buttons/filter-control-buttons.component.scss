@@ -1,0 +1,36 @@
+.filter-reset-apply{
+    display: flex;
+    flex-direction: row;
+}
+@media only screen and (max-width: 1430px) {
+    .filter-reset-apply{
+        display: flex;
+        flex-direction: row;
+    }
+}
+@media only screen and (max-width: 1200px) {
+    .filter-reset-apply{
+        display: flex;
+        flex-direction: row;
+    }
+}
+.reset{
+    color: #FF858E;
+    background-color: #FFFFFF;
+    border: 1px solid #FF858E;
+    margin:8% 0% 0% -10%;
+    padding: 20% 30%;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.apply{
+    background-color: #F44848;
+    color: white;
+    border-style: none ;
+    margin: 9% 0% 0% 80%;
+    padding: 23% 30%;
+    border-radius: 6px;
+    cursor: pointer;
+}
+

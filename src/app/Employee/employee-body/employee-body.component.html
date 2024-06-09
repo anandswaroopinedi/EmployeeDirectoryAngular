@@ -1,8 +1,8 @@
 <div class="employee-body">
     <div class="employee-body-header">
-        <app-operations-bar></app-operations-bar>
+        <app-operations-bar (export)="ExportData($event)"></app-operations-bar>
     </div>
     <div>
-        <app-employee-info [filterData]="filterData"></app-employee-info>
+        <app-employee-info #employeeInfo [filterData]="filterData"></app-employee-info>
     </div>
 </div>

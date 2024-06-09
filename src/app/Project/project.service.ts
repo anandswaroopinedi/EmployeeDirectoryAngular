@@ -11,6 +11,6 @@ export class ProjectService {
   }
   getProjects()
   {
-    return this.http.get<Project[]>(`https://localhost:7262/api/Project`);
+    return this.http.get<Project[]>(`https://localhost:7270/api/Project`);
   }
   }

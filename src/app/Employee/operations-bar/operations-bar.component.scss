@@ -90,91 +90,12 @@ span {
     margin-top:1%;
     font-size:12px;
 }
-.count{
-    margin-left: 2%;
-    border: 1px solid #FBC0C0;
-    padding: 0.1% 0.5% 0.1% 0.5%;
-    background-color: white;
-    color: #7A859B;
-}
+
 .filter-name{
     font-size: 1vw;
     color: rgb(254, 99, 99);
     font-family: poppins;
-}
-.filter-status-div{
-    margin-left: 3%;
-}
-
-.filter-status{
-    padding: 12%;
-    border: 1px solid #FBC0C0;
-    border-radius: 6px;
-    color: #7A859B;
-    display: inline-block;
-    position: relative;
-}
-.dropbtn {
-    display: flex;
-    justify-content: space-between;
-    background-color: white;
-    background-image: url("../../../assets/downArrow.jpg");
-    background-repeat: no-repeat;
-    background-size: 12px;
-    background-position-x: 95%;
-    background-position-y: 50%;
-    color: #7A859B;
-    padding: 4px 20px 4px 10px;
-    font-size: 14px;
-    width: 100%;
-    border: none;
-    border-radius: 20%;
-    cursor: pointer;
-  }
-  
-  
-  .dropdown {
-    position: relative;
-    display: inline-block;
-    border: 1px solid #FBC0C0;
-    border-radius: 10px;
-  }
-  
-  .dropdown-content {
-    position: absolute;
-    background-color: white;
-    color: #7A859B;
-    border: 1px solid #FBC0C0;
-    min-width: 125%;
-    overflow: auto;
-    margin-top: 1%;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 100;
-    padding: 5%;
-  }
-  
-  .dropdown-content a {
-    color: black;
-    padding: 7px;
-    /* padding: 12px 10px; */
-    text-decoration: none;
-  }
-  
-  
-  .show 
-  {display: block;}
-
-  .dropdown-entry{
-    display: flex;
-    flex-direction: row;
-    cursor: pointer;
-}
-.dropdown-entry label{
-    margin-left: 4%;
-}
-#status-check{
-    cursor: pointer;
-    width: 15px;
+    margin: 0px 0px;
 }
 
 .filter-location-div{
@@ -184,54 +105,12 @@ span {
 .filter-department-div{
     margin-left: 3%;
 }
-
-
-.filter-div{
-    display: flex;
-    flex-direction: row;
-    height: 80px;
+.filter-status-div{
+    margin-left: 3%;
 }
 
-.department-names{
-    font-size: 12px;
-    margin-left: 5px;
-    font-family: inherit;
-}
-.filter-reset-apply{
-    display: flex;
-    flex-direction: row;
-    margin-left:42%;
-}
-@media only screen and (max-width: 1430px) {
-    .filter-reset-apply{
-        display: flex;
-        flex-direction: row;
-    }
-}
-@media only screen and (max-width: 1200px) {
-    .filter-reset-apply{
-        display: flex;
-        flex-direction: row;
-    }
-}
-.reset{
-    color: #FF858E;
-    background-color: #FFFFFF;
-    border: 1px solid #FF858E;
-    margin:8% 0% 0% -10%;
-    padding: 20% 30%;
-    border-radius: 6px;
-    cursor: pointer;
-}
-
-.apply{
-    background-color: #F44848;
-    color: white;
-    border-style: none ;
-    margin: 9% 0% 0% 80%;
-    padding: 23% 30%;
-    border-radius: 6px;
-    cursor: pointer;
+.filter-Control-Buttons{
+    margin-left: 45%;
 }
 
 .vector-element{

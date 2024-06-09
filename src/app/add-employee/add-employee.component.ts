@@ -1,8 +1,8 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Form, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Department } from '../Department/department';
 import { Role } from '../Role/role';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { DepartmentServiceService } from '../Department/department-service.service';
 import { LocationService } from '../Location/location.service';
 import { RoleService } from '../Role/role.service';
@@ -12,6 +12,9 @@ import { Employee } from '../Employee/employee';
 import { EmployeeServiceService } from '../Employee/employee-service.service';
 import { ProjectService } from '../Project/project.service';
 import { CommonModule } from '@angular/common';
+import { StatusService } from '../status/status.service';
+import { Status } from '../status/status';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-employee',
@@ -22,6 +25,7 @@ import { CommonModule } from '@angular/common';
 })
 export class AddEmployeeComponent implements OnInit {
   @ViewChild('imgInput') imageInput!:ElementRef;
+  Operation:string="Add Employee"
   profileImg:string="assets/profile.png";
   isImageuploaded:boolean=false;
   isSubmitted:boolean=false;
@@ -31,12 +35,18 @@ export class AddEmployeeComponent implements OnInit {
   roleSubscription?:Subscription;
   projectSubscription?:Subscription;
   emoployeeSubscription?:Subscription;
+  statusSubscription?:Subscription;
   locations:Location[]=[];
   departments:Department[]=[];
   roles:Role[]=[];
   projects:Project[]=[];
   managers:Employee[]=[];
-  constructor(public departmentService:DepartmentServiceService,public locationService:LocationService,public roleService:RoleService,public employeeService:EmployeeServiceService,private projectService:ProjectService)
+  statuses:Status[]=[];
+  isSuccesfullyAdded:boolean=false;
+  imageString:string='';
+  edit:boolean=false;
+  // private imageString$:Subject<string>=new Subject<string>();
+  constructor(public departmentService:DepartmentServiceService,public locationService:LocationService,public roleService:RoleService,public employeeService:EmployeeServiceService,private projectService:ProjectService,private statusService:StatusService,private activatedRoute:ActivatedRoute,private router:Router)
   {
     this.employeeForm = new FormGroup({
       profileImage:new FormControl('',[Validators.required]),
@@ -44,18 +54,56 @@ export class AddEmployeeComponent implements OnInit {
       lastName: new FormControl('',[Validators.required,Validators.pattern(/^[a-zA-Z]+(?: [a-zA-Z '-]{0,39})?$/)]),
       email: new FormControl('',[Validators.required,Validators.email]),
       id: new FormControl('',[Validators.required,Validators.pattern(/^TZ\d{4}$/)]),
-      department: new FormControl('',[Validators.required]),
-      dateOfBirth: new FormControl(''),
-      mobileNo: new FormControl('',Validators.pattern(/^\d{10}$/)),
-      joiningDate: new FormControl('',[Validators.required]),
-      location: new FormControl('',[Validators.required]),
-      role: new FormControl('',[Validators.required]),
-      manager: new FormControl(''),
-      project: new FormControl('',[Validators.required])
+      departmentId: new FormControl(null),
+      dateOfBirth: new FormControl(),
+      mobileNo: new FormControl(null,Validators.pattern(/^\d{10}$/)),
+      joinDate: new FormControl('',[Validators.required]),
+      locationId: new FormControl(null),
+      jobTitleId: new FormControl(null),
+      managerId: new FormControl(),
+      projectId: new FormControl('',[Validators.required]),
+      statusId: new FormControl('',[Validators.required])
     });
   }
   ngOnInit()
   {
+    this.activatedRoute.params.subscribe(params => { 
+      const id:string=params['id'];
+      console.log(id);
+      if(id!=undefined && id.length==6)
+      {
+        this.employeeService.getEmployeeById(id).subscribe((employee:Employee)=>{
+          console.log(employee);
+            this.employeeForm.patchValue({
+              id:employee.id,
+              firstName:employee.firstName,
+              lastName:employee.lastName,
+              email:employee.email,
+              departmentId:employee.departmentId,
+              dateOfBirth:employee.dateOfBirth,
+              locationId:employee.locationId,
+              projectId:employee.projectId,
+              statusId:employee.statusId,
+              managerId:employee.managerId,
+              jobTitleId:employee.jobTitleId,
+              joinDate:employee.joinDate,
+              mobileNo:employee.mobileNo
+            })
+            console.log(this.employeeForm.value);
+            this.edit=true;
+            this.imageString=employee.profileImage;
+            this.profileImg=employee.profileImage
+            this.isImageuploaded=true;
+            this.Operation="Edit Employee";
+          });
+          this.employeeForm.get('id')?.disable();
+          const profileImageControl = this.employeeForm.get('profileImage') as FormControl;
+            if (profileImageControl) {
+              profileImageControl.clearValidators();
+              profileImageControl.updateValueAndValidity({ onlySelf: true });
+            }
+      }
+      });
     this.deptSubscription=this.departmentService.getDepartments().subscribe((departmentData)=>
       {
         this.departments=departmentData;
@@ -71,6 +119,9 @@ export class AddEmployeeComponent implements OnInit {
     this.projectSubscription=this.projectService.getProjects().subscribe((value)=>{
       this.projects=value;
     })
+    this.statusSubscription=this.statusService.getStatuses().subscribe((value)=>{
+      this.statuses=value;
+    })
     this.emoployeeSubscription=this.employeeService.getEmployeeData().subscribe((value)=>{
       this.managers=value;
     })
@@ -81,14 +132,28 @@ export class AddEmployeeComponent implements OnInit {
   }
   checkImage(event:any)
   {
-
-    const fileCrctName = "assets/" + event.currentTarget.value.split('\\').pop();
-    if(fileCrctName)
-    {
-      this.employeeForm.value['profileImage']=fileCrctName;
-      this.profileImg=this.employeeForm.value['profileImage'];
-      this.isImageuploaded=true;
+    console.log(this.profileImg);
+    const reader = new FileReader();
+    if (event.target.files && event.target.files[0]) {
+      debugger;
+      reader.readAsDataURL(event.target.files[0]);
+      reader.onload = () => {
+        this.profileImg=reader.result as string;
+        console.log(this.profileImg)
+        this.isImageuploaded=true;
+        this.assignImage(reader.result as string);
+      };
+      reader.onerror = error => {
+        console.error('Error reading file:', error);
+      };
+      console.log(this.profileImg);
+      console.log(this.imageString);
     }
+  }
+  assignImage(image:string)
+  {
+    this.imageString=image;
+    console.log("Image String:"+this.imageString);
   }
   checkProfileImage()
   {
@@ -102,15 +167,74 @@ export class AddEmployeeComponent implements OnInit {
     this.isSubmitted=true;
     if(this.employeeForm.valid)
     {
+      console.log("sent data")
       console.log(this.employeeForm.value);
+      let emp=this.mapToEmployee(this.employeeForm.getRawValue());
+      debugger;
+      if(this.edit)
+      {
+        this.employeeService.updateEmployee(emp).subscribe((value)=>{
+        if(value==true)
+        {
+          setTimeout(()=>{
+            this.isSuccesfullyAdded=false;
+            setTimeout(()=>{
+            this.router.navigate(['addemployee/']);},1000)
+                    },3000);
+          this.isSuccesfullyAdded=true;
+        }
+        })
+      }
+      else
+      {
+        this.employeeService.postEmployeeData(emp).subscribe((value)=>{
+          if(value==true)
+          {
+            setTimeout(()=>{
+              this.isSuccesfullyAdded=false;
+              this.profileImg="assets/profile.png";
+              this.isImageuploaded=false;
+              this.employeeForm.reset();
+              Object.keys(this.employeeForm.controls).forEach(
+                 field => {
+                  this.employeeForm.get(field)!.setErrors(null);
+                 }
+                );
+            },3000);
+            this.isSuccesfullyAdded=true;
+          }
+        });
+      }
     }
+  }
+  mapToEmployee(empDetails:any)
+  {
+    console.log(empDetails);
+    let e:Employee={
+        id:empDetails.id,
+        profileImage:this.imageString,
+        firstName:empDetails.firstName,
+        lastName:empDetails.lastName,
+        email:empDetails.email,
+        departmentId:empDetails.departmentId,
+        departmentName:'',
+        locationId:empDetails.locationId,
+        locationName:'',
+        jobTitleId:empDetails.jobTitleId,
+        jobTitleName:'',
+        joinDate:empDetails.joinDate,
+        statusId:empDetails.statusId,
+        statusName:'',
+        managerId:empDetails.managerId,
+        projectId:empDetails.projectId,
+        dateOfBirth:empDetails.dateOfBirth,
+        mobileNo:empDetails.mobileNo
     }
+    return e;
+  }
   onCancel()
   {
-    this.employeeForm.reset();
-    this.profileImg="assets/profile.png";
-    this.isImageuploaded=false;
-    console.log(this.employeeForm.value);
+    this.router.navigate(['']);
   }
   ngOnDestroy()
   {

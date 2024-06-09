@@ -10,6 +10,6 @@ export class DepartmentServiceService {
 
   constructor(private http:HttpClient) { }
   getDepartments():Observable<Department[]>{
-    return this.http.get<Department[]>(`https://localhost:7262/api/Department`);
+    return this.http.get<Department[]>(`https://localhost:7270/api/Department`);
   }
 }

@@ -12,7 +12,7 @@
                     <h4>Department</h4>
                 </div>
                 <div>
-                    <h4>{{role.department}}</h4>
+                    <h4>{{role.departmentName}}</h4>
                 </div>
             </div>
             <div class="role-particular-subsec2">
@@ -21,7 +21,7 @@
                     <h4>Location</h4>
                 </div>
                 <div>
-                    <h4>{{role.location}}</h4>
+                    <h4>{{role.locationName}}</h4>
                 </div>
             </div>
             <div class="role-particular-subsec2" >
@@ -30,7 +30,7 @@
             </div>
             <div class="role-particular-subsec">
                 <div></div>
-                <a href="roleDetails.html" class="view-emp">View all Employees</a>
+                <a routerLink="/roleDetails/{{role.roleDeptLocId}}" class="view-emp">View all Employees</a>
             </div>
         </div>
     }

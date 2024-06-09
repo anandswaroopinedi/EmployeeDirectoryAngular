@@ -4,42 +4,61 @@ import { Observable, Subject, map } from 'rxjs';
 import { Employee } from './employee';
 import { FilterData } from './filter-data';
 import axios from 'axios';
+import { WebApiUrls } from '../webapi-urls';
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeeServiceService {
+  private apiUrls:WebApiUrls =new WebApiUrls();
   employees:Employee[]=[];
   filterData$:Subject<FilterData>;
-  constructor(private http:HttpClient ) {
+  constructor(private http:HttpClient) {
     this.filterData$=new Subject<FilterData>();
    }
-
+  postEmployeeData(employee:Employee):Observable<boolean>
+  {
+    debugger;
+    console.log("post method called")
+    return this.http.post<boolean>(this.apiUrls.addEmployee,employee);
+  }
   getEmployeeData():Observable<Employee[]>
   {
-    var Employees=this.http.get<Employee[]>(`https://localhost:7262/api/Employee/GetAllEmployees`);
-    Employees.subscribe((emp)=>{
-      console.log(emp[0].status.id);
-    })
-    
-    return this.http.get<Employee[]>(`https://localhost:7262/api/Employee/GetAllEmployees`);
+    return this.http.get<Employee[]>(this.apiUrls.getAllEmployees);
+  }
+  getEmployeesWithRoleNull(name:string):Observable<Employee[]>
+  {
+    return this.http.get<Employee[]>(this.apiUrls.getEmployeesWithRolenull+name);
   }
   deleteEmployeeData(employeeIds:string[]):Observable<Employee[]>
   {
-    return this.http.delete<Employee[]>(`https://localhost:7262/api/Employee/DeleteEmployees`,{body:employeeIds});
+    return this.http.delete<Employee[]>(this.apiUrls.deleteEmployees,{body:employeeIds});
+  }
+  updateEmployee(employee:Employee)
+  {
+    return this.http.post<boolean>(this.apiUrls.updateEmployee,employee);
   }
   getEmployeeIds():Observable<string[]>
   {
-    return this.http.get<string[]>(`https://localhost:7262/api/Employee/GetAllIds`);
+    return this.http.get<string[]>(this.apiUrls.getAllIds);
   }
   applyFilters(inputFilters:FilterData):Observable<Employee[]>
   {
-    return this.http.post<Employee[]>(`https://localhost:7262/api/Employee/FilterEmployees`,inputFilters);
+    return this.http.post<Employee[]>(this.apiUrls.filterEmployees,inputFilters);
   }
   applySorting(property: string, order: string): Observable<Employee[]> {
     const params = new HttpParams()
       .set('property', property)
       .set('order', order);
-    return this.http.get<Employee[]>('https://localhost:7262/api/Employee/Sorting', { params });
+    return this.http.get<Employee[]>(this.apiUrls.sorting, { params });
+  }
+  getEmployeeById(id:string):Observable<Employee>
+  {
+    console.log(id)
+    return this.http.get<Employee>(this.apiUrls.getEmployeeById+id);
+  }
+  getEmployeesByRoleId(id:number):Observable<Employee[]>
+  {
+    return this.http.get<Employee[]>(this.apiUrls.getEmployeeByRoleId+id);
   }
   ngOnDestroy()
   {

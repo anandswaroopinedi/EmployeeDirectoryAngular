@@ -88,7 +88,7 @@
                     <td>
                         <div class="emp-image">
                             <div>
-                                <img src="employee.profileImage" class="user-img"/>
+                                <img src={{employee.profileImage}} class="user-img"/>
                             </div>
                             <div class="user-details">
                                 <p><b class="emp-name">{{employee.firstName+' '+employee.lastName}}</b><br><p class="emp-mail">{{employee.email}}</p></p>
@@ -96,20 +96,20 @@
                         </div>
                     </td>
                     <td class="emp-location">
-                        {{employee.location}}
+                        {{employee.locationName| formatNullToNone}}
                     </td>
                     <td class="emp-department">
-                        {{employee.department}}
+                        {{employee.departmentName| formatNullToNone}}
                     </td>
                     <td>
-                        {{employee.jobTitle}}
+                        {{employee.jobTitleName | formatNullToNone}}
                     </td>
                     <td class="emp-no">
                         {{employee.id}}
                     </td>
                     <td>
                         <!-- <button class="active-status" *ngif(=="In Active") [ngStyle]="{'backgroundColor' : '#F89191','color' : 'white'}"></button> -->
-                        <button class="active-status">{{employee.status.statusName}}</button>
+                        <button class="active-status">{{employee.statusName}}</button>
                     </td>
                     <td>
                         {{employee.joinDate}}
@@ -121,8 +121,8 @@
                                 <div class="menu-option">
                                     View Details
                                 </div>
-                                <div class="menu-option">
-                                    Edit
+                                <div class="menu-option" routerLink="/addemployee/{{employee.id}}"> 
+                                   Edit
                                 </div>
                                 <div class="menu-option" (click)="deleteEmployeeUsingEllipsis(employee.id)">
                                     Delete

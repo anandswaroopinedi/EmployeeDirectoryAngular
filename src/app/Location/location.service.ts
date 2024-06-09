@@ -8,6 +8,6 @@ import { Location } from './location';
 export class LocationService {
   constructor(private http:HttpClient) { }
   getLocations():Observable<Location[]>{
-    return this.http.get<Location[]>(`https://localhost:7262/api/Location`);
+    return this.http.get<Location[]>(`https://localhost:7270/api/Location`);
   }
 }

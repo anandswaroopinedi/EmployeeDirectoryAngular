@@ -6,6 +6,7 @@
 }
 .side-bar{
     position: sticky;
+    top:0;
     height: 420px;
     left: 1.1vw;
     display: flex; 
@@ -18,6 +19,8 @@
 }
 .vertical-shview{
     display: none;
+    position: sticky;
+    top:0;
     margin:1% 1% 1% 1%;
     width: 100%;
     flex-direction: column;

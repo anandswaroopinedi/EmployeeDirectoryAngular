@@ -1,0 +1,45 @@
+.dropbtn {
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+    background-image: url("../../../assets/downArrow.jpg");
+    background-repeat: no-repeat;
+    background-size: 12px;
+    background-position-x: 95%;
+    background-position-y: 50%;
+    color: #7A859B;
+    padding: 4px 20px 4px 10px;
+    font-size: 14px;
+    width: 100%;
+    border: none;
+    border-radius: 20%;
+    cursor: pointer;
+  }
+.dropdown {
+    position: relative;
+    display: inline-block;
+    border: 1px solid #FBC0C0;
+    border-radius: 10px;
+  }
+  
+  .dropdown-content {
+    position: absolute;
+    background-color: white;
+    color: #7A859B;
+    border: 1px solid #FBC0C0;
+    min-width: 125%;
+    overflow: auto;
+    margin-top: 1%;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 100;
+    padding: 5%;
+  }
+.dropdown-entry
+{
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+}
+.dropdown-entry label{
+    margin-left: 4%;
+}

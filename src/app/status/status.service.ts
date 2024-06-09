@@ -12,7 +12,7 @@ export class StatusService {
   }
   getStatuses():Observable<Status[]>
   {
-    return this.http.get<Status[]>(`https://localhost:7262/GetAllStatuses`);
+    return this.http.get<Status[]>(`https://localhost:7270/GetAllStatuses`);
   }
    
 }

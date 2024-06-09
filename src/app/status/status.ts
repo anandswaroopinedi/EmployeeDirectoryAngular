@@ -1,7 +1,6 @@
 export interface Status{
     id:number;
-    statusName:string;
-    
+    name:string;
 }
 // export class Status{
 //     id: number;

@@ -1,0 +1,31 @@
+export class WebApiUrls{
+     addEmployee:string;
+     getAllEmployees:string;
+     deleteEmployees:string;
+     updateEmployee:string;
+     getAllIds:string;
+     filterEmployees:string;
+     sorting:string;
+     getEmployeeById:string;
+     filterRoles:string;
+     getRoles:string;
+     getEmployeesWithRolenull:string;
+     postRole:string;
+     getEmployeeByRoleId:string;
+    constructor()
+    {
+        this.addEmployee='https://localhost:7270/api/Employee/AddEmployee';
+        this.getAllEmployees='https://localhost:7270/api/Employee/GetAllEmployees';
+        this.deleteEmployees='https://localhost:7270/api/Employee/DeleteEmployees';
+        this.updateEmployee='https://localhost:7270/api/Employee/UpdateEmployee';
+        this.getAllIds='https://localhost:7270/api/Employee/GetAllIds';
+        this.filterEmployees='https://localhost:7270/api/Employee/FilterEmployees';
+        this.sorting='https://localhost:7270/api/Employee/Sorting';
+        this.getEmployeeById='https://localhost:7270/api/Employee/GetEmployeeById?id=';
+        this.filterRoles='https://localhost:7270/api/Role/FilterRoles';
+        this.getRoles='https://localhost:7270/api/Role/GetRole';
+        this.getEmployeesWithRolenull='https://localhost:7270/api/Employee/EmployeesWithRoleNull?name=';
+        this.postRole='https://localhost:7270/api/Role/AddRole';
+        this.getEmployeeByRoleId='https://localhost:7270/api/Employee/GetEmployeeByRoleId?id=';
+    }
+}

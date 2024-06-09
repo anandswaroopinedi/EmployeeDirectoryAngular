@@ -78,12 +78,12 @@
     margin: -4% 0% 0% 3%;
     flex-direction: row;
 }
-.inavalid{
+.invalid{
     width: 10px;
     height: 12px;
     margin: 1.5% 3% 0% 0%;
 }
-.inavalid1{
+.invalid1{
     width: 10px;
     height: 12px;
     margin: 5% 3% 0% 0%;
@@ -213,7 +213,7 @@
     padding: 16px;
     position: relative;
     z-index: 100;
-    top: -70%;
+    top: -13%;
     left: 80%;
     /* top: -30%; */
     font-size: 17px;
@@ -248,7 +248,7 @@
     background-image: url("../../assets/asterisk.webp");
     background-size: 10px;
     background-repeat: no-repeat;
-    background-position-x:95%;
+    background-position-x:92%;
     background-position-y: 50% ;
     padding-right: 14%;
 }

@@ -10,108 +10,94 @@ import { Router } from '@angular/router';
 import { RouterLink } from '@angular/router';
 import { Status } from '../../status/status';
 import { StatusService } from '../../status/status.service';
+import { FilterDropdownComponent } from "../../Shared Components/filter-dropdown/filter-dropdown.component";
+import { FilterControlButtonsComponent } from "../../Shared Components/filter-control-buttons/filter-control-buttons.component";
 @Component({
-  selector: 'app-operations-bar',
-  standalone: true,
-  imports: [RouterLink],
-  templateUrl: './operations-bar.component.html',
-  styleUrl: './operations-bar.component.scss'
+    selector: 'app-operations-bar',
+    standalone: true,
+    templateUrl: './operations-bar.component.html',
+    styleUrl: './operations-bar.component.scss',
+    imports: [RouterLink, FilterDropdownComponent, FilterControlButtonsComponent]
 })
 export class OperationsBarComponent implements OnInit,OnDestroy {
-
-  isStatusDropDownHidden:boolean=true;
-  isLocationDropDownHidden:boolean=true;
-  isDepartmentDropDownHidden:boolean=true;
-  filterAlphabet:string="$";
-  selectedDepartments:number[]=[];
-  selectedStatus:number[]=[];
-  selectedLocations:number[]=[];
+  @ViewChild('locationFilter') locationFilter?: FilterDropdownComponent;
+  @ViewChild('departmentFilter') departmentFilter?: FilterDropdownComponent;
+  @ViewChild('statusFilter') statusFilter?: FilterDropdownComponent;
+  @Output() export=new EventEmitter<boolean>();
   departments?:Department[];
   locations?:Location[];
   statuses?:Status[];
   deptSubscription?:Subscription;
   locSubscription?:Subscription;
+  filter1:string='Status';
+  filter2:string='Location';
+  filter3:string='Department';
+  isLocFilterOptionsSelected:boolean=false;
+  isDeptFilterOptionsSelected:boolean=false;
+  isStatusFilterOptionsSelected:boolean=false;
+  filterAlphabet:string="$";
   statusSubscription?:Subscription;
-  statusSelectedCount: number=0;
-  locationSelectedCount: number=0;
-  departmentSelectedCount: number=0;
   resetFilterCheckBoxes:boolean=false;
   @ViewChild('buttonsRef') alphabetButtonRef?: ElementRef;
   @ViewChild('filterCheckBoxes') filterCheckBoxes?: ElementRef;
   constructor(private employeeService:EmployeeServiceService,private departmentService:DepartmentServiceService,private locationService:LocationService,private statusService:StatusService,private router:Router){}
   ngOnInit(): void {
+    this.statusSubscription=this.statusService.getStatuses().subscribe((value)=>{
+      this.statuses=value;
+      console.log(this.statuses);
+      console.log(this.statuses[0].name);
+    });
     this.deptSubscription=this.departmentService.getDepartments().subscribe((departmentData)=>
       {
         this.departments=departmentData;
         console.log(this.departments);
-      })
+      });
     this.locSubscription=this.locationService.getLocations().subscribe((locationData)=>{
       this.locations=locationData;
-    })
-    this.statusSubscription=this.statusService.getStatuses().subscribe((value)=>{
-      this.statuses=value;
     })
   }
 getAlphabet(ascii:number) {
   return String.fromCharCode(65+ascii);
   // return 
 }
-checkStatus(value:number,event:any)
-{
-  if(event.currentTarget.checked==true)
+StatusFilterApplied(isSelected:boolean)
   {
-    this.statusSelectedCount+=1;
-    this.selectedStatus.push(value);
+    if(isSelected)
+    {
+      this.isStatusFilterOptionsSelected=true;
+    }
+    else
+    {
+      this.isStatusFilterOptionsSelected=false;
+    }
   }
-  else
+LocationFilterApplied(isSelected:boolean)
   {
-    this.statusSelectedCount-=1;
-    this.selectedStatus=this.selectedStatus.filter(item=>item!=value)
+    if(isSelected)
+    {
+      this.isLocFilterOptionsSelected=true;
+    }
+    else
+    {
+      this.isLocFilterOptionsSelected=false;
+    }
   }
-}
-checkDepartment(departmentId:number,event:any)
-{
-  if(event.currentTarget.checked==true)
+  DepartmentFilterApplied(isSelected:boolean)
   {
-    this.departmentSelectedCount+=1
-    this.selectedDepartments.push(departmentId);
+    if(isSelected)
+    {
+      this.isDeptFilterOptionsSelected=true;
+    }
+    else
+    {
+      this.isDeptFilterOptionsSelected=false;
+    }
   }
-  else
-  {
-    this.departmentSelectedCount-=1
-    this.selectedDepartments=this.selectedDepartments.filter(item=>item!=departmentId)
-  }
-  console.log(this.selectedDepartments);
-}
-checkLocation(locationId:number,event:any)
-{
-  if(event.currentTarget.checked==true)
-  {
-    this.locationSelectedCount+=1
-    this.selectedLocations.push(locationId);
-  }
-  else
-  {
-    this.locationSelectedCount-=1
-    this.selectedLocations=this.selectedLocations.filter(item=>item!=locationId)
-  }
-  console.log(this.selectedLocations)
-}
+  
 counter(i: number) {
   return new Array(i);
 }
-selectStatusDropDown()
-{
-  this.isStatusDropDownHidden=this.isStatusDropDownHidden?false:true;
-}
-selectLocationDropDown()
-{
-  this.isLocationDropDownHidden=this.isLocationDropDownHidden?false:true;
-}
-selectDepartmentDropDown()
-{
-  this.isDepartmentDropDownHidden=this.isDepartmentDropDownHidden?false:true;
-}
+
  filterDataByAlphabet(index:number,event:any) {
   console.log(index);
   const alphabet:string=this.getAlphabet(index);
@@ -131,7 +117,7 @@ selectDepartmentDropDown()
     this.filterAlphabet=alphabet;
   }
   //this.employeeService.alphabet$.next(this.filterAlphabet);
-  this.filterByUserInputs()
+  this.filterApply(true)
   this.makeUnSelectBtnDefault(index);
 }
 makeUnSelectBtnDefault(index:number)
@@ -143,47 +129,55 @@ makeUnSelectBtnDefault(index:number)
     {
       selectedVectorEle[i].style.backgroundColor='#EAEBEE';
       selectedVectorEle[i].style.color='#818282';
-      debugger
     }
   }
 }
-filterByUserInputs()
-{
-  var inputFilters:FilterData={
-    Alphabet:"",
-    Statuses:[],
-    Locations:[],
-    Departments:[]
-  };
-  inputFilters.Alphabet=this.filterAlphabet;
-  inputFilters.Statuses=this.selectedStatus;
-  inputFilters.Departments=this.selectedDepartments;
-  inputFilters.Locations=this.selectedLocations;
-  this.employeeService.filterData$.next(inputFilters);
-}
-reset()
-{
-  this.makeFilterArraysDefault();
-  this.filterByUserInputs();
-}
-makeFilterArraysDefault()
-{
-  this.selectedDepartments=[];
-  this.selectedLocations=[];
-  this.selectedStatus=[];
-  this.departmentSelectedCount=0;
-  this.locationSelectedCount=0;
-  this.statusSelectedCount=0;
-  this.isDepartmentDropDownHidden=true;
-  this.isLocationDropDownHidden=true;
-  this.isStatusDropDownHidden=true;
-  //const selectedCheckBoxes=this.filterCheckBoxes?.nativeElement.querySelectorAll('div.input.');
-  const checkboxes=document.getElementsByClassName("status-check") as HTMLCollectionOf<HTMLInputElement>
-  for(let i=0;i<checkboxes.length;i++)
+filterApply(isApplied:boolean)
   {
-    checkboxes[i].checked=false;
+    
+    if(isApplied)
+    {
+      var inputFilters:FilterData=new FilterData();
+      inputFilters.Locations=this.locationFilter!.selectedFiltersIdsArray();
+      inputFilters.Departments=this.departmentFilter!.selectedFiltersIdsArray();
+      inputFilters.Alphabet=this.filterAlphabet;
+      inputFilters.Statuses=this.statusFilter!.selectedFiltersIdsArray();
+      console.log(inputFilters)
+      debugger;
+      this.employeeService.filterData$.next(inputFilters);
+    }
   }
-}
+  filterReset(isReset:boolean)
+  { 
+    var inputFilters:FilterData=new FilterData();
+    inputFilters.Alphabet=this.filterAlphabet;
+    this.locationFilter!.reset();
+    this.departmentFilter!.reset();
+    this.statusFilter!.reset();
+    this.employeeService.filterData$.next(inputFilters);
+  }
+  ExportData()
+  {
+    this.export.emit(true);
+  }
+// makeFilterArraysDefault()
+// {
+//   this.selectedDepartments=[];
+//   this.selectedLocations=[];
+//   this.selectedStatus=[];
+//   this.departmentSelectedCount=0;
+//   this.locationSelectedCount=0;
+//   this.statusSelectedCount=0;
+//   this.isDepartmentDropDownHidden=true;
+//   this.isLocationDropDownHidden=true;
+//   this.isStatusDropDownHidden=true;
+//   //const selectedCheckBoxes=this.filterCheckBoxes?.nativeElement.querySelectorAll('div.input.');
+//   const checkboxes=document.getElementsByClassName("status-check") as HTMLCollectionOf<HTMLInputElement>
+//   for(let i=0;i<checkboxes.length;i++)
+//   {
+//     checkboxes[i].checked=false;
+//   }
+// }
 ngOnDestroy()
 {
   this.deptSubscription?.unsubscribe();
