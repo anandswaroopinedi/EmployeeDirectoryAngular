@@ -1,35 +1,61 @@
 <div class="operations-bar">
-    <div class="operations-header">
-        <div>
-            <h6 class="header-heading">Employees</h6>
-            <p class="header-heading-desc">Find all of your company's employee accounts and their associated roles.</p>
-        </div>
-        <div class="accessing-buttons">
-            <button class="export-button" (click)="ExportData()">EXPORT</button>
-                <span>&#10010;</span>
-                <button class="add-button" routerLink="/addemployee">  ADD EMPLOYEE</button>
-        </div>
+  <div class="operations-header">
+    <div>
+      <h6 class="header-heading">Employees</h6>
+      <p class="header-heading-desc">
+        Find all of your company's employee accounts and their associated roles.
+      </p>
     </div>
-    <div #buttonsRef class="button-group">
-                <img src="../../../assets/filterBlack.svg" class="my-auto">
-                @for(item of counter(26);track item;let i = $index)
-                {
-                    <button (click)="filterDataByAlphabet(i,$event)" class="vector-element">{{getAlphabet(i)}}</button>
-                }
+    <div class="accessing-buttons">
+      <button class="export-button" (click)="ExportData()">EXPORT</button>
+      <span>&#10010;</span>
+      <button class="add-button" routerLink="/home/addemployee">ADD EMPLOYEE</button>
     </div>
-    <div class="filter">
-        <pre class="filter-name">Filter</pre>
-        <div class="filter-status-div">
-            <app-filter-dropdown #statusFilter (isSelected)="StatusFilterApplied($event)" [filterName]="filter1" [dropDownData]="statuses"></app-filter-dropdown>
-        </div> 
-        <div class="filter-location-div">
-            <app-filter-dropdown #locationFilter (isSelected)="LocationFilterApplied($event)" [filterName]="filter2" [dropDownData]="locations"></app-filter-dropdown>
-        </div>
-        <div class="filter-department-div">
-            <app-filter-dropdown #departmentFilter (isSelected)="DepartmentFilterApplied($event)" [filterName]="filter3" [dropDownData]="departments"></app-filter-dropdown>
-        </div>
-        <div class="filter-Control-Buttons">
-            <app-filter-control-buttons (isApply)="filterApply($event)" (isReset)="filterReset($event)" [isDisplayed]="isStatusFilterOptionsSelected||isLocFilterOptionsSelected||isDeptFilterOptionsSelected"></app-filter-control-buttons>
-        </div>
+  </div>
+  <div #buttonsRef class="button-group">
+    <img src="../../../assets/filterBlack.svg" class="my-auto" />
+    @for(item of counter(26);track item;let i = $index) {
+    <button (click)="filterDataByAlphabet(i, $event)" class="vector-element">
+      {{ getAlphabet(i) }}
+    </button>
+    }
+  </div>
+  <div class="filter">
+    <pre class="filter-name">Filter</pre>
+    <div class="filter-status-div">
+      <app-filter-dropdown
+        #statusFilter
+        (isSelected)="StatusFilterApplied($event)"
+        [filterName]="filter1"
+        [dropDownData]="statuses"
+      ></app-filter-dropdown>
     </div>
+    <div class="filter-location-div">
+      <app-filter-dropdown
+        #locationFilter
+        (isSelected)="LocationFilterApplied($event)"
+        [filterName]="filter2"
+        [dropDownData]="locations"
+      ></app-filter-dropdown>
+    </div>
+    <div class="filter-department-div">
+      <app-filter-dropdown
+        #departmentFilter
+        (isSelected)="DepartmentFilterApplied($event)"
+        [filterName]="filter3"
+        [dropDownData]="departments"
+      ></app-filter-dropdown>
+    </div>
+    <div class="filter-Control-Buttons">
+      <app-filter-control-buttons
+        (isApply)="filterApply($event)"
+        (isReset)="filterReset($event)"
+        [isDisplayed]="
+          isStatusFilterOptionsSelected ||
+          isLocFilterOptionsSelected ||
+          isDeptFilterOptionsSelected
+        "
+      ></app-filter-control-buttons>
+    </div>
+  </div>
 </div>

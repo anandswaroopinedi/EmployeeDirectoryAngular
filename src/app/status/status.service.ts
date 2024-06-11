@@ -2,17 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Status } from './status';
 import { Observable } from 'rxjs';
+import { WebApiUrls } from '../webapi-urls';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class StatusService {
-
-  constructor(private http:HttpClient) {
+  private apiUrls: WebApiUrls = new WebApiUrls();
+  constructor(private http: HttpClient) {}
+  getStatuses(): Observable<Status[]> {
+    return this.http.get<Status[]>(this.apiUrls.statuses);
   }
-  getStatuses():Observable<Status[]>
-  {
-    return this.http.get<Status[]>(`https://localhost:7270/GetAllStatuses`);
-  }
-   
 }

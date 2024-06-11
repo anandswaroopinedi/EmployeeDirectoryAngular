@@ -1,26 +1,26 @@
 //import { Status } from "../status/status";
 
-import { Status } from "../status/status";
+import { Status } from '../status/status';
 
 export interface Employee {
-    dateOfBirth:string,
-    profileImage:string,
-    firstName:string,
-    lastName:string,
-    email:string,
-    departmentId:number;
-    departmentName:string;
-    locationId:number;
-    locationName:string;
-    jobTitleId:number,
-    jobTitleName:string,
-    id:string,
-    joinDate:string,
-    statusId:number,
-    statusName:string,
-    managerId:string,
-    projectId:number,
-    mobileNo:string,
+  dateOfBirth: string;
+  profileImage: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  departmentId: number;
+  departmentName: string;
+  locationId: number;
+  locationName: string;
+  jobTitleId: number;
+  jobTitleName: string;
+  id: string;
+  joinDate: string;
+  statusId: number;
+  statusName: string;
+  managerId: string;
+  projectId: number;
+  mobileNo: string;
 }
 
 // export class Employee
@@ -55,4 +55,3 @@ export interface Employee {
 //         this.managerId=employeeData.managerId;
 //     }
 // }
-

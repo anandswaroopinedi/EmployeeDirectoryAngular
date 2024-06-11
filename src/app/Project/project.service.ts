@@ -1,16 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Project } from './project';
 import { HttpClient } from '@angular/common/http';
+import { WebApiUrls } from '../webapi-urls';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProjectService {
-
-  constructor(private http:HttpClient) { 
+  private apiUrls: WebApiUrls = new WebApiUrls();
+  constructor(private http: HttpClient) {}
+  getProjects() {
+    return this.http.get<Project[]>(this.apiUrls.projects);
   }
-  getProjects()
-  {
-    return this.http.get<Project[]>(`https://localhost:7270/api/Project`);
-  }
-  }
+}

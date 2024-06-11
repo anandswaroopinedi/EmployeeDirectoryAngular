@@ -1,13 +1,20 @@
 <div class="dropdown">
-    <button (click)="selectDropDown()" class="dropbtn">({{SelectedCount}}) {{filterName}}
-    </button>
-    <div [style.visibility]="isDropDownHidden? 'hidden': 'visible'" class="dropdown-content">
-        @for(item of dropDownData;track item)
-        {
-            <div class="dropdown-entry">
-                <input type="checkbox"   class="status-check"  (change)="checkFilter(item.id,$event)">
-                <label >{{item.name}}</label>
-            </div>
-        }
+  <button (click)="selectDropDown()" class="dropbtn">
+    ({{ SelectedCount }}) {{ filterName }}
+  </button>
+  <div
+    [style.visibility]="isDropDownHidden ? 'hidden' : 'visible'"
+    class="dropdown-content"
+  >
+    @for(item of dropDownData;track item) {
+    <div class="dropdown-entry">
+      <input
+        type="checkbox"
+        class="status-check"
+        (change)="checkFilter(item.id, $event)"
+      />
+      <label>{{ item.name }}</label>
     </div>
+    }
+  </div>
 </div>

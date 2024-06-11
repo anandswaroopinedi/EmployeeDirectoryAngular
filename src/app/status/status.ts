@@ -1,6 +1,6 @@
-export interface Status{
-    id:number;
-    name:string;
+export interface Status {
+  id: number;
+  name: string;
 }
 // export class Status{
 //     id: number;

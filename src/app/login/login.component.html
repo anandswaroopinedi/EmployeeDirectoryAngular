@@ -1,0 +1,18 @@
+
+<div class="login-body" *ngIf="dispLogin">
+  <div class="wrapper">
+    <form [formGroup]="loginForm">
+      <h2>Login</h2>
+        <div class="input-field">
+        <input formControlName="name" type="text" >
+        <label>Enter your username</label>
+      </div>
+      <div class="input-field">
+        <input formControlName="password" type="password" required>
+        <label>Enter your password</label>
+      </div>
+      <button type="submit" (click)="onSubmit()">Log In</button>
+    </form>
+  </div>
+</div>
+<router-outlet *ngIf="!dispLogin"></router-outlet>

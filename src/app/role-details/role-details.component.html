@@ -1,58 +1,64 @@
 <div>
-<div class="right-bodysec-header">
+  <div class="right-bodysec-header">
     <div>
-        <div class="heading-names">
-            <h2 class="page-heading">Roles </h2>
-            <span class="tab"></span>
-            <h6>&gt;</h6>
-            <span class="tab"></span>
-            <h2 class="page-heading"> Employees</h2>
-        </div>
-        <p class="page-heading-desc">All the roles are configured here.</p>
+      <div class="heading-names">
+        <h2 class="page-heading">Roles</h2>
+        <span class="tab"></span>
+        <h6>&gt;</h6>
+        <span class="tab"></span>
+        <h2 class="page-heading">Employees</h2>
+      </div>
+      <p class="page-heading-desc">All the roles are configured here.</p>
     </div>
     <div class="accessing-buttons">
-        <span>&#10010;</span>
-        <button class="add-button">ADD EMPLOYEE</button>
+      <span>&#10010;</span>
+      <button class="add-button">ADD EMPLOYEE</button>
     </div>
-</div>
-<div class="role-description">
+  </div>
+  <div class="role-description">
     <h3 class="role-name">Role Description</h3>
-    <p class="about">Configure the providers that are available to users when they sign in. Configure the providers that are available to users when they sign in. Configure the providers that are available to users when they sign in. Configure the providers that are available to users when they sign in.</p>
-</div>
-<div class="role-employees">
-    @for(emp of employees;track emp)
-    {
-        <div class="role-emp">
-            <div class="sub-section">
-                <div class="profile-img">
-                    <img class="emp-img" src={{emp.profileImage}}>
-                </div>
-                <div class="emp-info">
-                    <h6>{{emp.firstName+" "+emp.lastName}}</h6>
-                    <p class="job-title"><b>{{emp.jobTitleName}}</b></p>
-                </div>
-            </div>
-            <div class="sub-section1">
-                <img src="../../assets/team.svg">
-                <p>{{emp.id}}</p>
-            </div>
-            <div class="sub-section1">
-                <img src="../../assets/email.svg">
-                <p>{{emp.email}}</p>
-            </div>
-            <div class="sub-section1">
-                <img src="../../assets/team.svg">
-                <p>{{emp.departmentName}}</p>
-            </div>
-            <div class="sub-section1">
-                <img src="../../assets/location.svg">
-                <p>{{emp.locationName}}</p>
-            </div>
-            <div class="low-sub-section">
-                <div></div>
-                <a routerLink="" class="view">View</a>
-            </div>
+    <p class="about">
+      Configure the providers that are available to users when they sign in.
+      Configure the providers that are available to users when they sign in.
+      Configure the providers that are available to users when they sign in.
+      Configure the providers that are available to users when they sign in.
+    </p>
+  </div>
+  <div class="role-employees">
+    @for(emp of employees;track emp) {
+    <div class="role-emp">
+      <div class="sub-section">
+        <div class="profile-img">
+          <img class="emp-img" src="{{ emp.profileImage }}" />
         </div>
+        <div class="emp-info">
+          <h6>{{ emp.firstName + " " + emp.lastName }}</h6>
+          <p class="job-title">
+            <b>{{ emp.jobTitleName }}</b>
+          </p>
+        </div>
+      </div>
+      <div class="sub-section1">
+        <img src="../../assets/team.svg" />
+        <p>{{ emp.id }}</p>
+      </div>
+      <div class="sub-section1">
+        <img src="../../assets/email.svg" />
+        <p>{{ emp.email }}</p>
+      </div>
+      <div class="sub-section1">
+        <img src="../../assets/team.svg" />
+        <p>{{ emp.departmentName }}</p>
+      </div>
+      <div class="sub-section1">
+        <img src="../../assets/location.svg" />
+        <p>{{ emp.locationName }}</p>
+      </div>
+      <div class="low-sub-section">
+        <div></div>
+        <a routerLink="/home/employees" class="view">View</a>
+      </div>
+    </div>
     }
-</div>
+  </div>
 </div>

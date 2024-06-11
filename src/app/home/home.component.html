@@ -1,0 +1,14 @@
+<div class="layout">
+    <div class="side-bar" [ngStyle]="{ width: shView ? '8%' : '18%' }">
+      <app-side-bar (dispShview)="changeSideBarWidth($event)"></app-side-bar>
+    </div>
+    <div class="employee-body">
+      <div class="header">
+        <app-header></app-header>
+      </div>
+      <div>
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+</div>
+  

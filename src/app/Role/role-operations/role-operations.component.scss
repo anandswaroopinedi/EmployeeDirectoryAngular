@@ -1,69 +1,67 @@
-.header{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: -1%;
+.header {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: -1%;
 }
-.page-heading{
-    color: #3B5064;
-    margin-top: 12%;
+.page-heading {
+  color: #3b5064;
+  margin-top: 12%;
 }
 
-.page-heading-desc{
-    color: #83909a;
+.page-heading-desc {
+  color: #83909a;
 }
-.accessing-buttons{
-    justify-content: space-between;
+.accessing-buttons {
+  justify-content: space-between;
 }
 span {
-    content: "\271A";
-    color:white;
-    position: relative;
-    left: 20%;
-    cursor: pointer;
-  }
-.add-button{
-    background-color: #F44848;
-    border-style: none;
-    padding: 4px 10px 4px 30px;
-    margin:5px 10px;
-    border-radius: 5px;
-    color: white;
-    cursor: pointer;
+  content: "\271A";
+  color: white;
+  position: relative;
+  left: 20%;
+  cursor: pointer;
 }
-.filter{
-    display: flex;
-    width: 100%;
-    background-color: #FDF2F2;
-    color: #F66868;
-    padding: 0.5%;
-    border: 1px solid #FBC0C0;
-    border-radius: 6px;
-    justify-content: flex-start;
-    align-items: center;
-    margin-bottom: 1%;
-    height:50px;
-    margin-top:1%;
-    font-size:12px;
+.add-button {
+  background-color: #f44848;
+  border-style: none;
+  padding: 4px 10px 4px 30px;
+  margin: 5px 10px;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
 }
-
-.filter-name{
-    font-size: 1vw;
-    color: rgb(254, 99, 99);
-    font-family: poppins;
+.filter {
+  display: flex;
+  width: 100%;
+  background-color: #fdf2f2;
+  color: #f66868;
+  padding: 0.5%;
+  border: 1px solid #fbc0c0;
+  border-radius: 6px;
+  justify-content: flex-start;
+  align-items: center;
+  height: 50px;
+  margin:1% 0% 1% 0%;
+  font-size: 12px;
 }
 
-.filter-location-div{
-    margin-left: 3%;
+.filter-name {
+  font-size: 1vw;
+  color: rgb(254, 99, 99);
+  font-family: poppins;
 }
 
-.filter-department-div{
-    margin-left: 3%;
+.filter-location-div {
+  margin-left: 3%;
 }
 
+.filter-department-div {
+  margin-left: 3%;
+}
 
-.filter-Control-Buttons{
-    margin-left: 55%;
+.filter-Control-Buttons {
+  margin-left: 55%;
 }

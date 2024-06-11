@@ -1,22 +1,36 @@
 <div class="header">
-    <div>
-        <h5 class="page-heading">Roles</h5>
-        <p class="page-heading-desc">All the roles are configured here.</p>
-    </div>
-    <div class="accessing-buttons">
-        <span routerLink="/addrole">&#10010;</span>
-        <button class="add-button" routerLink="/addrole">ADD ROLE</button>
-    </div>
+  <div>
+    <h5 class="page-heading">Roles</h5>
+    <p class="page-heading-desc">All the roles are configured here.</p>
+  </div>
+  <div class="accessing-buttons">
+    <span routerLink="/home/addrole">&#10010;</span>
+    <button class="add-button" routerLink="/home/addrole">ADD ROLE</button>
+  </div>
 </div>
 <div class="filter">
-    <pre class="filter-name">Filter</pre>
-    <div class="filter-location-div">
-        <app-filter-dropdown #locationFilter (isSelected)="LocationFilterApplied($event)" [filterName]="filter2" [dropDownData]="locations"></app-filter-dropdown>
-    </div>
-    <div class="filter-department-div">
-        <app-filter-dropdown #departmentFilter (isSelected)="DepartmentFilterApplied($event)" [filterName]="filter1" [dropDownData]="departments"></app-filter-dropdown>
-    </div>
-    <div class="filter-Control-Buttons">
-        <app-filter-control-buttons (isApply)="filterApply($event)" (isReset)="filterReset($event)" [isDisplayed]="isLocFilterOptionsSelected||isDeptFilterOptionsSelected"></app-filter-control-buttons>
-    </div>
+  <pre class="filter-name">Filter</pre>
+  <div class="filter-location-div">
+    <app-filter-dropdown
+      #locationFilter
+      (isSelected)="LocationFilterApplied($event)"
+      [filterName]="filter2"
+      [dropDownData]="locations"
+    ></app-filter-dropdown>
+  </div>
+  <div class="filter-department-div">
+    <app-filter-dropdown
+      #departmentFilter
+      (isSelected)="DepartmentFilterApplied($event)"
+      [filterName]="filter1"
+      [dropDownData]="departments"
+    ></app-filter-dropdown>
+  </div>
+  <div class="filter-Control-Buttons">
+    <app-filter-control-buttons
+      (isApply)="filterApply($event)"
+      (isReset)="filterReset($event)"
+      [isDisplayed]="isLocFilterOptionsSelected || isDeptFilterOptionsSelected"
+    ></app-filter-control-buttons>
+  </div>
 </div>
